@@ -13,13 +13,9 @@
 :root {
   --gold: #f0b90b;
   --gold-light: #ffd75e;
-  --gold-dark: #d9a400;
   --green: #0ecb81;
   --green-light: #34e0a1;
   --red: #f6465d;
-  --bg-dark: #05070a;
-  --bg-card: #0f1318;
-  --bg-input: #141a21;
   --border: #1e2630;
   --text: #eaecef;
   --text-dim: #848e9c;
@@ -27,27 +23,14 @@
 }
 
 body {
-  background: #05070a;
-  color: var(--text);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
+  background: #05070a; color: var(--text);
+  display: flex; flex-direction: column; min-height: 100vh;
+  overflow-x: hidden; position: relative;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ===== ФОН ===== */
-.bg-orbs {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  overflow: hidden; z-index: 0; pointer-events: none;
-}
-.orb {
-  position: absolute; border-radius: 50%;
-  filter: blur(80px); opacity: 0.4;
-  animation: orbFloat 20s ease-in-out infinite;
-}
+.bg-orbs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: orbFloat 20s ease-in-out infinite; }
 .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(240,185,11,0.4), transparent 70%); top: -200px; left: -100px; }
 .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(14,203,129,0.3), transparent 70%); bottom: -150px; right: -100px; animation-delay: -7s; }
 .orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(100,80,255,0.25), transparent 70%); top: 40%; left: 50%; animation-delay: -14s; }
@@ -76,25 +59,18 @@ body {
   100% { transform: translateY(-10vh) scale(1); opacity: 0; }
 }
 
-/* ===== HEADER ===== */
 header {
-  background: rgba(10, 13, 17, 0.75);
-  backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(10, 13, 17, 0.75); backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  padding: 18px 40px;
-  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 40px; display: flex; justify-content: space-between; align-items: center;
   border-bottom: 1px solid rgba(240, 185, 11, 0.12);
   position: sticky; top: 0; z-index: 100;
   animation: slideDown 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-@keyframes slideDown {
-  from { transform: translateY(-100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
+@keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 header .logo {
-  font-family: 'Manrope', sans-serif;
-  font-size: 24px; font-weight: 800; letter-spacing: -0.5px;
+  font-family: 'Manrope', sans-serif; font-size: 24px; font-weight: 800;
+  letter-spacing: -0.5px;
   background: linear-gradient(135deg, #ffffff 0%, var(--gold) 50%, var(--gold-light) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -103,11 +79,9 @@ header .logo {
 }
 @keyframes shine { to { background-position: 200% center; } }
 .logo-icon {
-  width: 38px; height: 38px;
-  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  border-radius: 12px; font-size: 20px;
-  -webkit-text-fill-color: #0b0e11;
+  border-radius: 12px; font-size: 20px; -webkit-text-fill-color: #0b0e11;
   box-shadow: 0 0 25px rgba(240,185,11,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
   animation: iconPulse 3s ease-in-out infinite;
 }
@@ -115,7 +89,6 @@ header .logo {
   0%, 100% { box-shadow: 0 0 25px rgba(240,185,11,0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
   50% { box-shadow: 0 0 40px rgba(240,185,11,0.8), inset 0 1px 0 rgba(255,255,255,0.3); }
 }
-
 header nav a {
   color: var(--text-mid); margin-left: 28px; text-decoration: none;
   font-size: 14px; font-weight: 500; position: relative; transition: color 0.3s;
@@ -130,61 +103,42 @@ header nav a::after {
 header nav a:hover { color: var(--gold); }
 header nav a:hover::after { width: 100%; }
 
-/* ===== CONTAINER ===== */
 .container {
   max-width: 640px; margin: 60px auto;
   background: linear-gradient(160deg, rgba(20,26,33,0.95) 0%, rgba(12,16,21,0.98) 100%);
   border-radius: 24px; padding: 45px;
   border: 1px solid rgba(240, 185, 11, 0.12);
-  box-shadow:
-    0 30px 80px rgba(0,0,0,0.7),
-    0 0 0 1px rgba(240,185,11,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 0 100px rgba(240,185,11,0.05);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(240,185,11,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.06), 0 0 100px rgba(240,185,11,0.05);
   position: relative; z-index: 10;
   animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
-@keyframes fadeUp {
-  from { transform: translateY(40px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+@keyframes fadeUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 .container::before {
   content: ''; position: absolute; top: 0; left: 0;
   width: 100%; height: 3px;
   background: linear-gradient(90deg, transparent, var(--gold), var(--green), var(--gold), transparent);
-  background-size: 200% 100%;
-  animation: borderFlow 5s linear infinite;
+  background-size: 200% 100%; animation: borderFlow 5s linear infinite;
 }
-@keyframes borderFlow {
-  0% { background-position: 0% 0; }
-  100% { background-position: 200% 0; }
-}
+@keyframes borderFlow { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
 .container::after {
   content: ''; position: absolute; top: -50%; right: -50%;
   width: 200%; height: 200%;
   background: radial-gradient(circle, rgba(240,185,11,0.03) 0%, transparent 70%);
   pointer-events: none; animation: rotate 30s linear infinite;
 }
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 h1 {
-  font-family: 'Manrope', sans-serif;
-  font-size: 30px; margin-bottom: 12px;
+  font-family: 'Manrope', sans-serif; font-size: 30px; margin-bottom: 12px;
   background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 60%, var(--gold) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   font-weight: 800; letter-spacing: -0.8px; line-height: 1.2;
   position: relative; z-index: 1;
 }
-p.subtitle {
-  color: var(--text-dim); font-size: 15px; margin-bottom: 30px;
-  line-height: 1.6; position: relative; z-index: 1;
-}
+p.subtitle { color: var(--text-dim); font-size: 15px; margin-bottom: 30px; line-height: 1.6; position: relative; z-index: 1; }
 
-/* ===== TABS (НАПРАВЛЕНИЕ ОБМЕНА) ===== */
 .tabs {
   display: flex; gap: 10px; margin-bottom: 28px;
   background: rgba(10,14,19,0.6); padding: 6px;
@@ -192,12 +146,10 @@ p.subtitle {
   position: relative; z-index: 1;
 }
 .tab {
-  flex: 1; padding: 14px 20px;
-  background: transparent; border: none;
+  flex: 1; padding: 14px 20px; background: transparent; border: none;
   color: var(--text-dim); font-size: 14px; font-weight: 600;
   border-radius: 10px; cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  font-family: 'Inter', sans-serif;
   display: flex; align-items: center; justify-content: center; gap: 8px;
   letter-spacing: 0.3px;
 }
@@ -208,16 +160,12 @@ p.subtitle {
   box-shadow: 0 6px 20px rgba(240,185,11,0.35);
   font-weight: 700;
 }
-.tab.active::before { content: '●'; font-size: 8px; }
 
-/* ===== STATUS BAR ===== */
 .status-bar {
-  display: flex; gap: 12px; align-items: center;
-  font-size: 13px; color: var(--green);
-  margin-bottom: 30px; padding: 12px 18px;
+  display: flex; gap: 12px; align-items: center; font-size: 13px;
+  color: var(--green); margin-bottom: 30px; padding: 12px 18px;
   background: linear-gradient(135deg, rgba(14, 203, 129, 0.08), rgba(14, 203, 129, 0.02));
-  border: 1px solid rgba(14, 203, 129, 0.2);
-  border-radius: 12px;
+  border: 1px solid rgba(14, 203, 129, 0.2); border-radius: 12px;
   animation: pulse 2.5s ease-in-out infinite;
   position: relative; z-index: 1; font-weight: 500;
   backdrop-filter: blur(10px);
@@ -236,7 +184,6 @@ p.subtitle {
   50% { opacity: 0.4; transform: scale(0.85); }
 }
 
-/* ===== FORM ===== */
 .form-group { margin-bottom: 22px; position: relative; z-index: 1; }
 label {
   display: block; font-size: 12px; color: var(--text-mid);
@@ -254,44 +201,30 @@ select, input {
 }
 select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f0b90b' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 18px center;
+  background-repeat: no-repeat; background-position: right 18px center;
   padding-right: 45px; cursor: pointer;
 }
 select option { background: #141a21; color: var(--text); }
 select:hover, input:hover { border-color: rgba(240,185,11,0.3); background: rgba(10, 14, 19, 1); }
 select:focus, input:focus {
   border-color: var(--gold);
-  box-shadow:
-    0 0 0 4px rgba(240, 185, 11, 0.1),
-    0 0 30px rgba(240,185,11,0.2),
-    inset 0 1px 0 rgba(255,255,255,0.05);
-  background: rgba(10, 14, 19, 1);
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 4px rgba(240, 185, 11, 0.1), 0 0 30px rgba(240,185,11,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+  background: rgba(10, 14, 19, 1); transform: translateY(-1px);
 }
 input::placeholder { color: #5e6673; font-weight: 400; }
 
-/* ===== SWAP ICON ===== */
-.swap-icon {
-  display: flex; justify-content: center; align-items: center;
-  margin: -12px 0; position: relative; z-index: 5;
-}
+.swap-icon { display: flex; justify-content: center; align-items: center; margin: -12px 0; position: relative; z-index: 5; }
 .swap-icon button {
   width: 48px; height: 48px;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  border: 3px solid #0f1318;
-  border-radius: 50%; cursor: pointer;
+  border: 3px solid #0f1318; border-radius: 50%; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   font-size: 20px; color: #0b0e11;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 0 25px rgba(240,185,11,0.5);
 }
-.swap-icon button:hover {
-  transform: rotate(180deg) scale(1.1);
-  box-shadow: 0 0 40px rgba(240,185,11,0.8);
-}
+.swap-icon button:hover { transform: rotate(180deg) scale(1.1); box-shadow: 0 0 40px rgba(240,185,11,0.8); }
 
-/* ===== RATE INFO ===== */
 .rate-info {
   background: linear-gradient(135deg, rgba(240,185,11,0.1), rgba(240,185,11,0.02));
   padding: 16px 20px; border-radius: 14px;
@@ -303,7 +236,6 @@ input::placeholder { color: #5e6673; font-weight: 400; }
 }
 .rate-info b { color: var(--gold); font-weight: 800; font-size: 14px; font-family: 'Manrope', sans-serif; }
 
-/* ===== BUTTONS ===== */
 .btn {
   width: 100%; padding: 18px;
   background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
@@ -317,8 +249,7 @@ input::placeholder { color: #5e6673; font-weight: 400; }
   font-family: 'Manrope', sans-serif; z-index: 1;
 }
 .btn:hover {
-  background-position: 200% center;
-  transform: translateY(-3px);
+  background-position: 200% center; transform: translateY(-3px);
   box-shadow: 0 15px 40px rgba(240,185,11,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
 }
 .btn:active { transform: translateY(-1px); }
@@ -337,7 +268,6 @@ input::placeholder { color: #5e6673; font-weight: 400; }
 }
 .btn-green:hover { box-shadow: 0 15px 40px rgba(14,203,129,0.5), inset 0 1px 0 rgba(255,255,255,0.4); }
 
-/* ===== RESULT ===== */
 .result {
   display: none; margin-top: 28px;
   background: linear-gradient(150deg, rgba(15,19,24,0.95), rgba(8,11,15,0.98));
@@ -348,10 +278,7 @@ input::placeholder { color: #5e6673; font-weight: 400; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 40px rgba(0,0,0,0.4);
 }
 .result.show { display: block; }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .result .addr {
   background: #05070a; padding: 18px; border-radius: 12px;
   margin: 16px 0; word-break: break-all;
@@ -360,11 +287,7 @@ input::placeholder { color: #5e6673; font-weight: 400; }
   position: relative; cursor: pointer; transition: all 0.3s;
   font-weight: 600; letter-spacing: 0.5px; line-height: 1.5;
 }
-.result .addr:hover {
-  border-color: var(--gold);
-  box-shadow: 0 0 30px rgba(240,185,11,0.25);
-  transform: scale(1.01);
-}
+.result .addr:hover { border-color: var(--gold); box-shadow: 0 0 30px rgba(240,185,11,0.25); transform: scale(1.01); }
 .result .addr::after {
   content: '📋 Нажми, чтобы скопировать';
   display: block; font-size: 10px; color: var(--text-dim);
@@ -396,7 +319,6 @@ input::placeholder { color: #5e6673; font-weight: 400; }
   font-family: 'Manrope', sans-serif;
 }
 
-/* ===== FOOTER ===== */
 footer {
   margin-top: auto; text-align: center; padding: 30px;
   color: #5e6673; font-size: 12px;
@@ -406,7 +328,6 @@ footer {
   font-weight: 500; letter-spacing: 0.3px;
 }
 
-/* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 640px) {
   .container { margin: 20px 15px; padding: 28px; border-radius: 20px; }
   h1 { font-size: 24px; }
@@ -431,22 +352,14 @@ footer {
 <div class="particles" id="particles"></div>
 
 <header>
-  <div class="logo">
-    <span class="logo-icon">⚡</span>
-    TON SWAP
-  </div>
-  <nav>
-    <a href="#">Обмен</a>
-    <a href="#">Курсы</a>
-    <a href="#">Поддержка</a>
-  </nav>
+  <div class="logo"><span class="logo-icon">⚡</span> TON SWAP</div>
+  <nav><a href="#">Обмен</a><a href="#">Курсы</a><a href="#">Поддержка</a></nav>
 </header>
 
 <div class="container">
   <h1>Быстрый обмен криптовалют</h1>
   <p class="subtitle">Обмен крипты на рубли, доллары и обратно. Без комиссий, мгновенно.</p>
 
-  <!-- ТАБЫ НАПРАВЛЕНИЯ -->
   <div class="tabs">
     <button class="tab active" onclick="setDirection('crypto2fiat', this)">💱 Крипта → Фиат</button>
     <button class="tab" onclick="setDirection('fiat2crypto', this)">💳 Фиат → Крипта</button>
@@ -488,30 +401,52 @@ footer {
   <div class="result" id="result">
     <p>✅ Заявка создана. Переведите <b id="payAmount" style="color:#f0b90b;">0</b> <span id="payCur">TON</span>:</p>
     <div class="addr" id="walletAddr" onclick="copyAddr()">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
-    <p>После перевода нажмите кнопку ниже:</p>
+    <p id="payInstruction">После перевода нажмите кнопку ниже:</p>
     <button class="btn btn-green" onclick="showPaymentForm()">✅ Я оплатил</button>
     <p class="warning">⚠️ Внимание: переводы с санкционных бирж запрещены.</p>
   </div>
 
-  <!-- ФОРМА РЕКВИЗИТОВ -->
+  <!-- ФОРМА РЕКВИЗИТОВ (МЕНЯЕТСЯ В ЗАВИСИМОСТИ ОТ НАПРАВЛЕНИЯ) -->
   <div class="result" id="paymentForm" style="display:none;">
-    <p style="margin-bottom: 20px; font-weight: 600;">📝 Заполните данные для получения:</p>
+    <p id="formTitle" style="margin-bottom: 20px; font-weight: 600;">📝 Заполните данные для получения:</p>
+    
     <div class="form-group">
       <label>Ваше имя</label>
       <input type="text" id="userName" placeholder="Иван Иванов">
     </div>
-    <div class="form-group">
-      <label id="cardLabel">Номер карты или телефон (СБП)</label>
-      <input type="text" id="userCard" placeholder="2200 0000 0000 0000">
+
+    <!-- БЛОК ДЛЯ КРИПТА → ФИАТ (получает рубли) -->
+    <div id="fiatRequisites" style="display:none;">
+      <div class="form-group">
+        <label>Номер карты или телефон (СБП)</label>
+        <input type="text" id="userCard" placeholder="2200 0000 0000 0000">
+      </div>
+      <div class="form-group">
+        <label>Банк</label>
+        <input type="text" id="userBank" placeholder="Сбербанк / Тинькофф / Альфа">
+      </div>
+      <div class="form-group">
+        <label>Сумма к получению (RUB)</label>
+        <input type="text" id="userAmount" placeholder="250 000">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Банк / Кошелёк</label>
-      <input type="text" id="userBank" placeholder="Сбербанк / Тинькофф / TON">
+
+    <!-- БЛОК ДЛЯ ФИАТ → КРИПТА (получает крипту) -->
+    <div id="cryptoRequisites" style="display:none;">
+      <div class="form-group">
+        <label>Ваш крипто-кошелёк (куда отправить крипту)</label>
+        <input type="text" id="userWallet" placeholder="UQ... / T... / 0x...">
+      </div>
+      <div class="form-group">
+        <label>Сеть / Валюта</label>
+        <input type="text" id="userNetwork" placeholder="TON / TRC20 / ERC20">
+      </div>
+      <div class="form-group">
+        <label>Сумма к получению (в крипте)</label>
+        <input type="text" id="userCryptoAmount" placeholder="4.0 TON">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Сумма к получению</label>
-      <input type="text" id="userAmount" placeholder="250 000">
-    </div>
+
     <button class="btn btn-green" onclick="submitPayment()">Отправить заявку</button>
   </div>
 
@@ -522,9 +457,7 @@ footer {
 
 </div>
 
-<footer>
-  © 2026 TON SWAP. Все права защищены.
-</footer>
+<footer>© 2026 TON SWAP. Все права защищены.</footer>
 
 <script>
 // ===== ЧАСТИЦЫ =====
@@ -545,31 +478,22 @@ for (let i = 0; i < 40; i++) {
   particlesContainer.appendChild(p);
 }
 
-// ===== АДРЕСА =====
+// ===== АДРЕСА И РЕКВИЗИТЫ =====
 const WALLETS = {
   TON:  "UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH",
   USDT: "TT4FuAXpXQjVXYqXuXojbhedYsW3WwZQq1",
   ETH:  "0xe16aea126c8Aa4B97eeD2BEf4315956E1840373B"
 };
 
+// КАРТА ДЛЯ ПРИЁМА РУБЛЕЙ (когда Фиат → Крипта)
+const MY_CARD = "2200 0000 0000 0000"; // ЗАМЕНИ НА СВОЮ
+const MY_BANK = "Сбербанк";
 const SUPPORT = "@Frycrycry";
 
-// ===== КУРСЫ (ОТНОСИТЕЛЬНО RUB) =====
-// 1 единица крипты = X RUB
-const rates = {
-  TON: 250,
-  USDT: 95,
-  ETH: 250000
-};
+// ===== КУРСЫ =====
+const rates = { TON: 250, USDT: 95, ETH: 250000 };
+const fiatRates = { RUB: 1, USD: 92, EUR: 100 };
 
-// Курсы фиата относительно RUB
-const fiatRates = {
-  RUB: 1,
-  USD: 92,
-  EUR: 100
-};
-
-// ===== НАПРАВЛЕНИЯ =====
 const directions = {
   crypto2fiat: {
     from: [
@@ -580,8 +504,7 @@ const directions = {
     to: [
       { value: 'RUB', label: 'RUB (Сбербанк / Тинькофф)' },
       { value: 'USD', label: 'USD (доллары)' },
-      { value: 'EUR', label: 'EUR (евро)' },
-      { value: 'CARD', label: 'На карту (любой банк)' }
+      { value: 'EUR', label: 'EUR (евро)' }
     ]
   },
   fiat2crypto: {
@@ -604,7 +527,6 @@ function fillSelects() {
   const fromSelect = document.getElementById('fromCurrency');
   const toSelect = document.getElementById('toCurrency');
   const dir = directions[currentDirection];
-
   fromSelect.innerHTML = dir.from.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
   toSelect.innerHTML = dir.to.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
   updateRate();
@@ -615,6 +537,10 @@ function setDirection(dir, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   fillSelects();
+  // Скрываем прошлые результаты
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('paymentForm').style.display = 'none';
+  document.getElementById('successMsg').classList.remove('show');
 }
 
 function swapCurrencies() {
@@ -627,7 +553,6 @@ function swapCurrencies() {
 }
 
 function getRate(from, to) {
-  // Курс относительно RUB
   const fromRate = rates[from] || fiatRates[from] || 1;
   const toRate = rates[to] || fiatRates[to] || 1;
   return fromRate / toRate;
@@ -656,13 +581,18 @@ function calculate() {
   document.getElementById('payAmount').innerText = amount.toFixed(2);
   document.getElementById('payCur').innerText = from;
 
-  // Если отдаём крипту — показываем адрес кошелька
-  if (WALLETS[from]) {
+  const isCryptoFrom = !!WALLETS[from];
+
+  if (isCryptoFrom) {
+    // КРИПТА → ФИАТ: показываем адрес кошелька для отправки крипты
     document.getElementById('walletAddr').innerText = WALLETS[from];
     document.getElementById('walletAddr').style.display = 'block';
+    document.getElementById('payInstruction').innerText = `После перевода ${from} нажмите кнопку ниже:`;
   } else {
-    // Если отдаём фиат — показываем реквизиты поддержки
-    document.getElementById('walletAddr').innerText = 'Реквизиты для оплаты: напишите в поддержку ' + SUPPORT;
+    // ФИАТ → КРИПТА: показываем реквизиты для оплаты рублями
+    document.getElementById('walletAddr').innerText = `💳 Переведите ${amount.toFixed(2)} ${from} на карту: ${MY_CARD} (${MY_BANK})`;
+    document.getElementById('walletAddr').style.display = 'block';
+    document.getElementById('payInstruction').innerText = `После перевода напишите в поддержку ${SUPPORT} для подтверждения:`;
   }
 
   document.getElementById('result').classList.add('show');
@@ -670,19 +600,44 @@ function calculate() {
 }
 
 function showPaymentForm() {
+  const from = document.getElementById('fromCurrency').value;
+  const isCryptoFrom = !!WALLETS[from];
+
+  if (isCryptoFrom) {
+    // КРИПТА → ФИАТ: форма для получения рублей
+    document.getElementById('formTitle').innerText = '📝 Данные для получения рублей:';
+    document.getElementById('fiatRequisites').style.display = 'block';
+    document.getElementById('cryptoRequisites').style.display = 'none';
+  } else {
+    // ФИАТ → КРИПТА: форма для получения крипты
+    document.getElementById('formTitle').innerText = '📝 Данные для получения крипты:';
+    document.getElementById('fiatRequisites').style.display = 'none';
+    document.getElementById('cryptoRequisites').style.display = 'block';
+  }
+
   document.getElementById('paymentForm').style.display = 'block';
   document.getElementById('paymentForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function submitPayment() {
-  const name = document.getElementById('userName').value;
-  const card = document.getElementById('userCard').value;
-  const bank = document.getElementById('userBank').value;
-  const amount = document.getElementById('userAmount').value;
+  const from = document.getElementById('fromCurrency').value;
+  const isCryptoFrom = !!WALLETS[from];
 
-  if (!name || !card || !bank || !amount) {
-    alert('Заполните все поля!');
-    return;
+  const name = document.getElementById('userName').value;
+  if (!name) { alert('Заполните имя!'); return; }
+
+  if (isCryptoFrom) {
+    // КРИПТА → ФИАТ
+    const card = document.getElementById('userCard').value;
+    const bank = document.getElementById('userBank').value;
+    const amount = document.getElementById('userAmount').value;
+    if (!card || !bank || !amount) { alert('Заполните все поля!'); return; }
+  } else {
+    // ФИАТ → КРИПТА
+    const wallet = document.getElementById('userWallet').value;
+    const network = document.getElementById('userNetwork').value;
+    const amount = document.getElementById('userCryptoAmount').value;
+    if (!wallet || !network || !amount) { alert('Заполните все поля!'); return; }
   }
 
   document.getElementById('successMsg').classList.add('show');
@@ -705,4 +660,4 @@ function copyAddr() {
 }
 </script>
 </body>
-        </html>
+  </html>
