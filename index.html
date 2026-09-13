@@ -4,78 +4,133 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TON Swap — Премиум обмен криптовалют</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Manrope', 'Segoe UI', sans-serif; }
+
+:root {
+  --gold: #f0b90b;
+  --gold-light: #ffd75e;
+  --gold-dark: #d9a400;
+  --green: #0ecb81;
+  --green-light: #34e0a1;
+  --red: #f6465d;
+  --bg-dark: #05070a;
+  --bg-card: #0f1318;
+  --bg-input: #141a21;
+  --border: #1e2630;
+  --text: #eaecef;
+  --text-dim: #848e9c;
+  --text-mid: #b7bdc6;
+}
 
 body {
-  background: radial-gradient(circle at 20% 20%, #1a1f2e 0%, #0b0e11 50%, #05070a 100%);
-  color: #eaecef;
+  background: #05070a;
+  color: var(--text);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  font-feature-settings: 'ss01', 'cv01';
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Анимированный фон */
-body::before {
-  content: '';
+/* ===== АНИМИРОВАННЫЙ ФОН ===== */
+.bg-orbs {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background:
-    radial-gradient(circle at 80% 10%, rgba(240,185,11,0.08) 0%, transparent 40%),
-    radial-gradient(circle at 10% 80%, rgba(14,203,129,0.08) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(100,80,255,0.05) 0%, transparent 50%);
-  pointer-events: none;
+  overflow: hidden;
   z-index: 0;
-  animation: bgPulse 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+.orb-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(240,185,11,0.4), transparent 70%);
+  top: -200px; left: -100px;
+  animation-delay: 0s;
+}
+.orb-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(14,203,129,0.3), transparent 70%);
+  bottom: -150px; right: -100px;
+  animation-delay: -7s;
+}
+.orb-3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(100,80,255,0.25), transparent 70%);
+  top: 40%; left: 50%;
+  animation-delay: -14s;
+}
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -60px) scale(1.1); }
+  66% { transform: translate(-60px, 80px) scale(0.9); }
 }
 
-@keyframes bgPulse {
-  0% { opacity: 0.6; }
-  100% { opacity: 1; }
+/* ===== СЕТКА НА ФОНЕ ===== */
+.grid-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image:
+    linear-gradient(rgba(240,185,11,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,185,11,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 1;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 80%);
 }
 
-/* Плавающие частицы */
+/* ===== ЧАСТИЦЫ ===== */
 .particles {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
   overflow: hidden;
 }
 .particle {
   position: absolute;
-  width: 4px; height: 4px;
-  background: #f0b90b;
+  background: var(--gold);
   border-radius: 50%;
-  opacity: 0.3;
-  animation: float linear infinite;
-  box-shadow: 0 0 10px #f0b90b;
+  opacity: 0;
+  box-shadow: 0 0 10px currentColor;
+  animation: floatUp linear infinite;
 }
-@keyframes float {
-  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-  10% { opacity: 0.5; }
-  90% { opacity: 0.5; }
-  100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
 header {
-  background: rgba(30, 35, 41, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 18px 30px;
+  background: rgba(10, 13, 17, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  padding: 18px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(240, 185, 11, 0.15);
+  border-bottom: 1px solid rgba(240, 185, 11, 0.12);
   position: sticky;
   top: 0;
   z-index: 100;
-  animation: slideDown 0.6s ease-out;
+  animation: slideDown 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @keyframes slideDown {
   from { transform: translateY(-100%); opacity: 0; }
@@ -83,429 +138,545 @@ header {
 }
 
 header .logo {
+  font-family: 'Manrope', sans-serif;
   font-size: 24px;
   font-weight: 800;
-  background: linear-gradient(135deg, #f0b90b 0%, #ffd75e 50%, #f0b90b 100%);
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--gold) 50%, var(--gold-light) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shine 3s linear infinite;
+  animation: shine 4s linear infinite;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 @keyframes shine {
   to { background-position: 200% center; }
 }
-
-header .logo::before {
-  content: '⚡';
-  font-size: 26px;
-  -webkit-text-fill-color: #f0b90b;
-  animation: zap 2s ease-in-out infinite;
+.logo-icon {
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 12px;
+  font-size: 20px;
+  -webkit-text-fill-color: #0b0e11;
+  box-shadow: 0 0 25px rgba(240,185,11,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+  animation: iconPulse 3s ease-in-out infinite;
 }
-@keyframes zap {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #f0b90b); }
-  50% { transform: scale(1.15); filter: drop-shadow(0 0 15px #f0b90b); }
+@keyframes iconPulse {
+  0%, 100% { box-shadow: 0 0 25px rgba(240,185,11,0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
+  50% { box-shadow: 0 0 40px rgba(240,185,11,0.8), inset 0 1px 0 rgba(255,255,255,0.3); }
 }
 
 header nav a {
-  color: #b7bdc6;
-  margin-left: 25px;
+  color: var(--text-mid);
+  margin-left: 28px;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   position: relative;
   transition: color 0.3s;
+  font-family: 'Inter', sans-serif;
 }
 header nav a::after {
   content: '';
   position: absolute;
-  bottom: -5px; left: 0;
+  bottom: -6px; left: 0;
   width: 0; height: 2px;
-  background: linear-gradient(90deg, #f0b90b, #ffd75e);
-  transition: width 0.3s;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 10px var(--gold);
 }
-header nav a:hover { color: #f0b90b; }
+header nav a:hover { color: var(--gold); }
 header nav a:hover::after { width: 100%; }
 
-/* CONTAINER */
+/* ===== CONTAINER ===== */
 .container {
-  max-width: 620px;
-  margin: 50px auto;
-  background: linear-gradient(145deg, rgba(30,35,41,0.95) 0%, rgba(20,24,30,0.98) 100%);
-  border-radius: 20px;
-  padding: 40px;
-  border: 1px solid rgba(240, 185, 11, 0.15);
+  max-width: 640px;
+  margin: 60px auto;
+  background: linear-gradient(160deg, rgba(20,26,33,0.95) 0%, rgba(12,16,21,0.98) 100%);
+  border-radius: 24px;
+  padding: 45px;
+  border: 1px solid rgba(240, 185, 11, 0.12);
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.6),
+    0 30px 80px rgba(0,0,0,0.7),
     0 0 0 1px rgba(240,185,11,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.05);
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 0 100px rgba(240,185,11,0.05);
   position: relative;
   z-index: 10;
-  animation: fadeUp 0.8s ease-out;
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 @keyframes fadeUp {
-  from { transform: translateY(30px); opacity: 0; }
+  from { transform: translateY(40px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
 .container::before {
   content: '';
   position: absolute;
-  top: -2px; left: -2px;
-  width: calc(100% + 4px);
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #f0b90b, #0ecb81, #f0b90b, transparent);
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--green), var(--gold), transparent);
   background-size: 200% 100%;
-  animation: borderFlow 4s linear infinite;
+  animation: borderFlow 5s linear infinite;
 }
 @keyframes borderFlow {
   0% { background-position: 0% 0; }
   100% { background-position: 200% 0; }
 }
 
+.container::after {
+  content: '';
+  position: absolute;
+  top: -50%; right: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(240,185,11,0.03) 0%, transparent 70%);
+  pointer-events: none;
+  animation: rotate 30s linear infinite;
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 h1 {
-  font-size: 26px;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #ffffff 0%, #f0b90b 100%);
+  font-family: 'Manrope', sans-serif;
+  font-size: 30px;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 60%, var(--gold) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
 }
 p.subtitle {
-  color: #848e9c;
-  font-size: 14px;
-  margin-bottom: 25px;
-  line-height: 1.5;
+  color: var(--text-dim);
+  font-size: 15px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  font-weight: 400;
 }
 
-/* STATUS BAR */
+/* ===== STATUS BAR ===== */
 .status-bar {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
-  font-size: 12px;
-  color: #0ecb81;
-  margin-bottom: 25px;
-  padding: 10px 14px;
-  background: rgba(14, 203, 129, 0.08);
+  font-size: 13px;
+  color: var(--green);
+  margin-bottom: 30px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, rgba(14, 203, 129, 0.08), rgba(14, 203, 129, 0.02));
   border: 1px solid rgba(14, 203, 129, 0.2);
-  border-radius: 10px;
-  animation: pulse 2s ease-in-out infinite;
+  border-radius: 12px;
+  animation: pulse 2.5s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
 }
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(14,203,129,0.3); }
-  50% { box-shadow: 0 0 0 8px rgba(14,203,129,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14,203,129,0.3), inset 0 0 20px rgba(14,203,129,0.05); }
+  50% { box-shadow: 0 0 0 8px rgba(14,203,129,0), inset 0 0 30px rgba(14,203,129,0.1); }
 }
 .status-bar .dot {
-  width: 8px; height: 8px;
-  background: #0ecb81;
+  width: 9px; height: 9px;
+  background: var(--green);
   border-radius: 50%;
-  box-shadow: 0 0 10px #0ecb81;
+  box-shadow: 0 0 15px var(--green), 0 0 30px var(--green);
   animation: blink 1.5s ease-in-out infinite;
+  flex-shrink: 0;
 }
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
 }
 
-/* FORM */
-.form-group { margin-bottom: 22px; position: relative; }
+/* ===== FORM ===== */
+.form-group { margin-bottom: 24px; position: relative; z-index: 1; }
 label {
   display: block;
-  font-size: 13px;
-  color: #b7bdc6;
-  margin-bottom: 8px;
+  font-size: 12px;
+  color: var(--text-mid);
+  margin-bottom: 10px;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  letter-spacing: 1px;
   text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
 }
 select, input {
   width: 100%;
-  padding: 14px 16px;
-  background: rgba(20, 24, 30, 0.8);
-  border: 1.5px solid #2b3139;
-  border-radius: 12px;
-  color: #eaecef;
+  padding: 16px 18px;
+  background: rgba(10, 14, 19, 0.9);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  color: var(--text);
   font-size: 15px;
   outline: none;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  appearance: none;
+  -webkit-appearance: none;
 }
-select:hover, input:hover { border-color: #3c4450; }
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f0b90b' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 45px;
+  cursor: pointer;
+}
+select option { background: #141a21; color: var(--text); }
+select:hover, input:hover {
+  border-color: rgba(240,185,11,0.3);
+  background: rgba(10, 14, 19, 1);
+}
 select:focus, input:focus {
-  border-color: #f0b90b;
-  box-shadow: 0 0 0 4px rgba(240, 185, 11, 0.1), 0 0 20px rgba(240,185,11,0.15);
-  background: rgba(20, 24, 30, 1);
+  border-color: var(--gold);
+  box-shadow:
+    0 0 0 4px rgba(240, 185, 11, 0.1),
+    0 0 30px rgba(240,185,11,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  background: rgba(10, 14, 19, 1);
+  transform: translateY(-1px);
 }
+input::placeholder { color: #5e6673; font-weight: 400; }
 
+/* ===== RATE INFO ===== */
 .rate-info {
-  background: linear-gradient(135deg, rgba(240,185,11,0.08), rgba(240,185,11,0.02));
-  padding: 14px 16px;
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(240,185,11,0.1), rgba(240,185,11,0.02));
+  padding: 16px 20px;
+  border-radius: 14px;
   font-size: 13px;
-  color: #b7bdc6;
-  margin-bottom: 22px;
+  color: var(--text-mid);
+  margin-bottom: 24px;
   display: flex;
   justify-content: space-between;
-  border: 1px solid rgba(240,185,11,0.15);
+  align-items: center;
+  border: 1px solid rgba(240,185,11,0.2);
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
 }
-.rate-info b { color: #f0b90b; }
+.rate-info b {
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 14px;
+  font-family: 'Manrope', sans-serif;
+}
 
-/* BUTTONS */
+/* ===== BUTTONS ===== */
 .btn {
   width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, #f0b90b 0%, #ffd75e 50%, #f0b90b 100%);
+  padding: 18px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
   background-size: 200% auto;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   color: #0b0e11;
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  transition: all 0.3s;
-  letter-spacing: 0.5px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 1px;
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(240,185,11,0.25);
+  box-shadow:
+    0 10px 30px rgba(240,185,11,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+  font-family: 'Manrope', sans-serif;
+  z-index: 1;
 }
 .btn:hover {
   background-position: 200% center;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(240,185,11,0.4);
+  transform: translateY(-3px);
+  box-shadow:
+    0 15px 40px rgba(240,185,11,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.4);
 }
-.btn:active { transform: translateY(0); }
-
+.btn:active { transform: translateY(-1px); }
 .btn::before {
   content: '';
   position: absolute;
   top: 0; left: -100%;
   width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-  transition: left 0.6s;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  transition: left 0.7s;
 }
 .btn:hover::before { left: 100%; }
 
 .btn-green {
-  background: linear-gradient(135deg, #0ecb81 0%, #34e0a1 50%, #0ecb81 100%);
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 50%, var(--green) 100%);
   background-size: 200% auto;
   color: #0b0e11;
-  margin-top: 15px;
-  box-shadow: 0 8px 20px rgba(14,203,129,0.25);
+  margin-top: 18px;
+  box-shadow:
+    0 10px 30px rgba(14,203,129,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.3);
 }
 .btn-green:hover {
-  box-shadow: 0 12px 30px rgba(14,203,129,0.4);
+  box-shadow:
+    0 15px 40px rgba(14,203,129,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.4);
 }
 
-/* RESULT */
+/* ===== RESULT ===== */
 .result {
   display: none;
-  margin-top: 25px;
-  background: linear-gradient(145deg, rgba(20,24,30,0.9), rgba(15,18,22,0.95));
-  border-radius: 14px;
-  padding: 24px;
+  margin-top: 28px;
+  background: linear-gradient(150deg, rgba(15,19,24,0.95), rgba(8,11,15,0.98));
+  border-radius: 18px;
+  padding: 28px;
   font-size: 14px;
   border: 1px solid rgba(240,185,11,0.2);
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 40px rgba(0,0,0,0.4);
 }
 .result.show { display: block; }
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .result .addr {
   background: #05070a;
-  padding: 16px;
-  border-radius: 10px;
-  margin: 14px 0;
+  padding: 18px;
+  border-radius: 12px;
+  margin: 16px 0;
   word-break: break-all;
-  color: #f0b90b;
-  font-family: 'Courier New', monospace;
+  color: var(--gold);
+  font-family: 'Courier New', 'SF Mono', monospace;
   font-size: 13px;
-  border: 1px solid rgba(240,185,11,0.2);
+  border: 1.5px solid rgba(240,185,11,0.2);
   position: relative;
   cursor: pointer;
   transition: all 0.3s;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
 }
 .result .addr:hover {
-  border-color: #f0b90b;
-  box-shadow: 0 0 20px rgba(240,185,11,0.2);
+  border-color: var(--gold);
+  box-shadow: 0 0 30px rgba(240,185,11,0.25);
+  transform: scale(1.01);
 }
 .result .addr::after {
-  content: '📋 Копировать';
-  position: absolute;
-  top: 50%; right: 12px;
-  transform: translateY(-50%);
+  content: '📋 Нажми, чтобы скопировать';
+  display: block;
   font-size: 10px;
-  color: #848e9c;
-  font-family: 'Segoe UI', sans-serif;
-  opacity: 0;
-  transition: opacity 0.3s;
+  color: var(--text-dim);
+  font-family: 'Inter', sans-serif;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 500;
 }
-.result .addr:hover::after { opacity: 1; }
 
 .warning {
-  color: #f6465d;
+  color: var(--red);
   font-size: 12px;
-  margin-top: 15px;
-  padding: 10px;
+  margin-top: 18px;
+  padding: 12px 16px;
   background: rgba(246, 70, 93, 0.08);
-  border-radius: 8px;
-  border-left: 3px solid #f6465d;
+  border-radius: 10px;
+  border-left: 3px solid var(--red);
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .success-msg {
   display: none;
-  margin-top: 20px;
-  background: linear-gradient(135deg, #0ecb81, #34e0a1);
+  margin-top: 24px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
   color: #0b0e11;
-  padding: 18px;
-  border-radius: 12px;
+  padding: 20px;
+  border-radius: 14px;
   font-size: 14px;
   font-weight: 700;
-  animation: fadeIn 0.5s ease-out, glow 2s ease-in-out infinite;
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1), glowGreen 2s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  line-height: 1.5;
 }
 .success-msg.show { display: block; }
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(14,203,129,0.4); }
-  50% { box-shadow: 0 0 40px rgba(14,203,129,0.7); }
+@keyframes glowGreen {
+  0%, 100% { box-shadow: 0 0 30px rgba(14,203,129,0.5); }
+  50% { box-shadow: 0 0 60px rgba(14,203,129,0.9); }
 }
-.success-msg b { color: #0b0e11; text-decoration: underline; }
+.success-msg b {
+  color: #0b0e11;
+  background: rgba(255,255,255,0.3);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-family: 'Manrope', sans-serif;
+}
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 footer {
   margin-top: auto;
   text-align: center;
-  padding: 25px;
+  padding: 30px;
   color: #5e6673;
   font-size: 12px;
-  border-top: 1px solid rgba(240,185,11,0.1);
+  border-top: 1px solid rgba(240,185,11,0.08);
   position: relative;
   z-index: 10;
-  background: rgba(10, 13, 17, 0.5);
-  backdrop-filter: blur(10px);
+  background: rgba(5, 7, 10, 0.6);
+  backdrop-filter: blur(20px);
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
-/* АДАПТИВНОСТЬ */
+/* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 640px) {
-  .container { margin: 20px 15px; padding: 25px; border-radius: 16px; }
-  h1 { font-size: 22px; }
-  header { padding: 14px 18px; }
+  .container { margin: 20px 15px; padding: 28px; border-radius: 20px; }
+  h1 { font-size: 24px; }
+  header { padding: 14px 20px; }
   header .logo { font-size: 20px; }
-  header nav a { margin-left: 15px; font-size: 13px; }
+  .logo-icon { width: 32px; height: 32px; font-size: 17px; }
+  header nav a { margin-left: 16px; font-size: 13px; }
+  .btn { font-size: 15px; padding: 16px; }
+  .rate-info { font-size: 12px; padding: 14px 16px; flex-direction: column; gap: 8px; align-items: flex-start; }
 }
 </style>
 </head>
 <body>
 
+<!-- ФОНОВЫЕ ОРБЫ -->
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- СЕТКА -->
+<div class="grid-bg"></div>
+
 <!-- ЧАСТИЦЫ -->
 <div class="particles" id="particles"></div>
 
 <header>
-<div class="logo">TON SWAP</div>
-<nav>
-<a href="#">Обмен</a>
-<a href="#">Курсы</a>
-<a href="#">Поддержка</a>
-</nav>
+  <div class="logo">
+    <span class="logo-icon">⚡</span>
+    TON SWAP
+  </div>
+  <nav>
+    <a href="#">Обмен</a>
+    <a href="#">Курсы</a>
+    <a href="#">Поддержка</a>
+  </nav>
 </header>
 
 <div class="container">
-<h1>Быстрый обмен криптовалют</h1>
-<p class="subtitle">Обмен TON, USDT, ETH на рубли и обратно. Без комиссий, мгновенно.</p>
+  <h1>Быстрый обмен криптовалют</h1>
+  <p class="subtitle">Обмен TON, USDT, ETH на рубли и обратно. Без комиссий, мгновенно, безопасно.</p>
 
-<div class="status-bar">
-<span class="dot"></span>
-<span>Все системы работают. Онлайн-обмен доступен 24/7.</span>
-</div>
+  <div class="status-bar">
+    <span class="dot"></span>
+    <span>Все системы работают. Онлайн-обмен доступен 24/7.</span>
+  </div>
 
-<!-- ФОРМА ОБМЕНА -->
-<div id="exchangeForm">
-<div class="form-group">
-<label>Отдаю</label>
-<select id="fromCurrency">
-<option value="TON">TON (Toncoin)</option>
-<option value="USDT">USDT (TRC20)</option>
-<option value="ETH">ETH (Ethereum)</option>
-</select>
-</div>
-<div class="form-group">
-<label>Сумма</label>
-<input type="number" id="amount" placeholder="Введите сумму" value="1000">
-</div>
-<div class="form-group">
-<label>Получаю</label>
-<select id="toCurrency">
-<option value="RUB">RUB (Сбербанк / Тинькофф)</option>
-<option value="CARD">На карту (любой банк)</option>
-</select>
-</div>
-<div class="rate-info">
-<span>Курс: <b id="rateDisplay">1 TON = 250.00 RUB</b></span>
-<span>Комиссия: <b>0%</b></span>
-</div>
-<button class="btn" onclick="calculate()">Обменять</button>
-</div>
+  <!-- ФОРМА ОБМЕНА -->
+  <div id="exchangeForm">
+    <div class="form-group">
+      <label>Отдаю</label>
+      <select id="fromCurrency">
+        <option value="TON">TON (Toncoin)</option>
+        <option value="USDT">USDT (TRC20)</option>
+        <option value="ETH">ETH (Ethereum)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Сумма</label>
+      <input type="number" id="amount" placeholder="Введите сумму" value="1000">
+    </div>
+    <div class="form-group">
+      <label>Получаю</label>
+      <select id="toCurrency">
+        <option value="RUB">RUB (Сбербанк / Тинькофф)</option>
+        <option value="CARD">На карту (любой банк)</option>
+      </select>
+    </div>
+    <div class="rate-info">
+      <span>Курс: <b id="rateDisplay">1 TON = 250.00 RUB</b></span>
+      <span>Комиссия: <b>0%</b></span>
+    </div>
+    <button class="btn" onclick="calculate()">Обменять</button>
+  </div>
 
-<!-- РЕЗУЛЬТАТ -->
-<div class="result" id="result">
-<p>✅ Заявка создана. Переведите <b id="payAmount">0</b> <span id="payCur">TON</span> на адрес:</p>
-<div class="addr" id="walletAddr" onclick="copyAddr()">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
-<p>После перевода нажмите кнопку ниже:</p>
-<button class="btn btn-green" onclick="showPaymentForm()">✅ Я оплатил</button>
-<p class="warning">⚠️ Внимание: переводы с санкционных бирж запрещены.</p>
-</div>
+  <!-- РЕЗУЛЬТАТ -->
+  <div class="result" id="result">
+    <p>✅ Заявка создана. Переведите <b id="payAmount" style="color:#f0b90b;">0</b> <span id="payCur">TON</span> на адрес:</p>
+    <div class="addr" id="walletAddr" onclick="copyAddr()">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
+    <p>После перевода нажмите кнопку ниже:</p>
+    <button class="btn btn-green" onclick="showPaymentForm()">✅ Я оплатил</button>
+    <p class="warning">⚠️ Внимание: переводы с санкционных бирж запрещены.</p>
+  </div>
 
-<!-- ФОРМА РЕКВИЗИТОВ -->
-<div class="result" id="paymentForm" style="display:none;">
-<p>📝 Заполните данные для получения рублей:</p>
-<div class="form-group">
-<label>Ваше имя</label>
-<input type="text" id="userName" placeholder="Иван Иванов">
-</div>
-<div class="form-group">
-<label>Номер карты или телефон (СБП)</label>
-<input type="text" id="userCard" placeholder="2200 0000 0000 0000">
-</div>
-<div class="form-group">
-<label>Банк</label>
-<input type="text" id="userBank" placeholder="Сбербанк / Тинькофф / Альфа">
-</div>
-<div class="form-group">
-<label>Сумма к получению (RUB)</label>
-<input type="text" id="userAmount" placeholder="250 000">
-</div>
-<button class="btn btn-green" onclick="submitPayment()">Отправить заявку</button>
-</div>
+  <!-- ФОРМА РЕКВИЗИТОВ -->
+  <div class="result" id="paymentForm" style="display:none;">
+    <p style="margin-bottom: 20px; font-weight: 600;">📝 Заполните данные для получения рублей:</p>
+    <div class="form-group">
+      <label>Ваше имя</label>
+      <input type="text" id="userName" placeholder="Иван Иванов">
+    </div>
+    <div class="form-group">
+      <label>Номер карты или телефон (СБП)</label>
+      <input type="text" id="userCard" placeholder="2200 0000 0000 0000">
+    </div>
+    <div class="form-group">
+      <label>Банк</label>
+      <input type="text" id="userBank" placeholder="Сбербанк / Тинькофф / Альфа">
+    </div>
+    <div class="form-group">
+      <label>Сумма к получению (RUB)</label>
+      <input type="text" id="userAmount" placeholder="250 000">
+    </div>
+    <button class="btn btn-green" onclick="submitPayment()">Отправить заявку</button>
+  </div>
 
-<!-- СООБЩЕНИЕ УСПЕХА -->
-<div class="success-msg" id="successMsg">
-✅ Заявка принята! Для ускорения обработки напишите в поддержку: <b>@Frycrycry</b>
-</div>
+  <!-- СООБЩЕНИЕ УСПЕХА -->
+  <div class="success-msg" id="successMsg">
+    ✅ Заявка принята! Для ускорения обработки напишите в поддержку: <b>@Frycrycry</b>
+  </div>
 
 </div>
 
 <footer>
-© 2026 TON SWAP. Все права защищены.
+  © 2026 TON SWAP. Все права защищены.
 </footer>
 
 <script>
 // ===== ЧАСТИЦЫ =====
 const particlesContainer = document.getElementById('particles');
-for (let i = 0; i < 25; i++) {
+const colors = ['#f0b90b', '#ffd75e', '#0ecb81', '#34e0a1'];
+for (let i = 0; i < 40; i++) {
   const p = document.createElement('div');
   p.className = 'particle';
+  const size = Math.random() * 5 + 2;
   p.style.left = Math.random() * 100 + '%';
-  p.style.animationDuration = (Math.random() * 15 + 10) + 's';
-  p.style.animationDelay = Math.random() * 10 + 's';
-  p.style.width = p.style.height = (Math.random() * 4 + 2) + 'px';
+  p.style.width = size + 'px';
+  p.style.height = size + 'px';
+  p.style.background = colors[Math.floor(Math.random() * colors.length)];
+  p.style.color = p.style.background;
+  p.style.animationDuration = (Math.random() * 20 + 15) + 's';
+  p.style.animationDelay = Math.random() * 20 + 's';
+  p.style.boxShadow = `0 0 ${size * 3}px ${p.style.background}`;
   particlesContainer.appendChild(p);
 }
 
@@ -537,12 +708,12 @@ function calculate() {
   document.getElementById('payCur').innerText = from;
   document.getElementById('walletAddr').innerText = WALLETS[from] || WALLETS.TON;
   document.getElementById('result').classList.add('show');
-  document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function showPaymentForm() {
   document.getElementById('paymentForm').style.display = 'block';
-  document.getElementById('paymentForm').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('paymentForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function submitPayment() {
@@ -557,19 +728,23 @@ function submitPayment() {
   }
 
   document.getElementById('successMsg').classList.add('show');
-  document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function copyAddr() {
   const addr = document.getElementById('walletAddr').innerText;
-  navigator.clipboard.writeText(addr);
-  const el = document.getElementById('walletAddr');
-  el.style.borderColor = '#0ecb81';
-  el.style.boxShadow = '0 0 25px rgba(14,203,129,0.5)';
-  setTimeout(() => {
-    el.style.borderColor = '';
-    el.style.boxShadow = '';
-  }, 1000);
+  navigator.clipboard.writeText(addr).then(() => {
+    const el = document.getElementById('walletAddr');
+    const originalText = el.innerHTML;
+    el.style.borderColor = '#0ecb81';
+    el.style.boxShadow = '0 0 35px rgba(14,203,129,0.6)';
+    el.style.transform = 'scale(1.02)';
+    setTimeout(() => {
+      el.style.borderColor = '';
+      el.style.boxShadow = '';
+      el.style.transform = '';
+    }, 1200);
+  });
 }
 </script>
 </body>
