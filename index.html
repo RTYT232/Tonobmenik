@@ -34,82 +34,41 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-  font-feature-settings: 'ss01', 'cv01';
   -webkit-font-smoothing: antialiased;
 }
 
-/* ===== АНИМИРОВАННЫЙ ФОН ===== */
+/* ===== ФОН ===== */
 .bg-orbs {
-  position: fixed;
-  top: 0; left: 0;
+  position: fixed; top: 0; left: 0;
   width: 100%; height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  pointer-events: none;
+  overflow: hidden; z-index: 0; pointer-events: none;
 }
 .orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0.4;
   animation: orbFloat 20s ease-in-out infinite;
 }
-.orb-1 {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(240,185,11,0.4), transparent 70%);
-  top: -200px; left: -100px;
-  animation-delay: 0s;
-}
-.orb-2 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(14,203,129,0.3), transparent 70%);
-  bottom: -150px; right: -100px;
-  animation-delay: -7s;
-}
-.orb-3 {
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(100,80,255,0.25), transparent 70%);
-  top: 40%; left: 50%;
-  animation-delay: -14s;
-}
+.orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(240,185,11,0.4), transparent 70%); top: -200px; left: -100px; }
+.orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(14,203,129,0.3), transparent 70%); bottom: -150px; right: -100px; animation-delay: -7s; }
+.orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(100,80,255,0.25), transparent 70%); top: 40%; left: 50%; animation-delay: -14s; }
 @keyframes orbFloat {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(80px, -60px) scale(1.1); }
   66% { transform: translate(-60px, 80px) scale(0.9); }
 }
 
-/* ===== СЕТКА НА ФОНЕ ===== */
 .grid-bg {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background-image:
     linear-gradient(rgba(240,185,11,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(240,185,11,0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  z-index: 1;
-  pointer-events: none;
+  background-size: 50px 50px; z-index: 1; pointer-events: none;
   mask-image: radial-gradient(ellipse at center, black 0%, transparent 80%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 80%);
 }
 
-/* ===== ЧАСТИЦЫ ===== */
-.particles {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
-}
-.particle {
-  position: absolute;
-  background: var(--gold);
-  border-radius: 50%;
-  opacity: 0;
-  box-shadow: 0 0 10px currentColor;
-  animation: floatUp linear infinite;
-}
+.particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+.particle { position: absolute; border-radius: 50%; opacity: 0; animation: floatUp linear infinite; }
 @keyframes floatUp {
   0% { transform: translateY(100vh) scale(0); opacity: 0; }
   10% { opacity: 0.7; }
@@ -123,13 +82,9 @@ header {
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   padding: 18px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; justify-content: space-between; align-items: center;
   border-bottom: 1px solid rgba(240, 185, 11, 0.12);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: sticky; top: 0; z-index: 100;
   animation: slideDown 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @keyframes slideDown {
@@ -139,28 +94,19 @@ header {
 
 header .logo {
   font-family: 'Manrope', sans-serif;
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  font-size: 24px; font-weight: 800; letter-spacing: -0.5px;
   background: linear-gradient(135deg, #ffffff 0%, var(--gold) 50%, var(--gold-light) 100%);
   background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   animation: shine 4s linear infinite;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; align-items: center; gap: 10px;
 }
-@keyframes shine {
-  to { background-position: 200% center; }
-}
+@keyframes shine { to { background-position: 200% center; } }
 .logo-icon {
   width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  border-radius: 12px;
-  font-size: 20px;
+  border-radius: 12px; font-size: 20px;
   -webkit-text-fill-color: #0b0e11;
   box-shadow: 0 0 25px rgba(240,185,11,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
   animation: iconPulse 3s ease-in-out infinite;
@@ -171,19 +117,11 @@ header .logo {
 }
 
 header nav a {
-  color: var(--text-mid);
-  margin-left: 28px;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  position: relative;
-  transition: color 0.3s;
-  font-family: 'Inter', sans-serif;
+  color: var(--text-mid); margin-left: 28px; text-decoration: none;
+  font-size: 14px; font-weight: 500; position: relative; transition: color 0.3s;
 }
 header nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -6px; left: 0;
+  content: ''; position: absolute; bottom: -6px; left: 0;
   width: 0; height: 2px;
   background: linear-gradient(90deg, var(--gold), var(--gold-light));
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -194,19 +132,16 @@ header nav a:hover::after { width: 100%; }
 
 /* ===== CONTAINER ===== */
 .container {
-  max-width: 640px;
-  margin: 60px auto;
+  max-width: 640px; margin: 60px auto;
   background: linear-gradient(160deg, rgba(20,26,33,0.95) 0%, rgba(12,16,21,0.98) 100%);
-  border-radius: 24px;
-  padding: 45px;
+  border-radius: 24px; padding: 45px;
   border: 1px solid rgba(240, 185, 11, 0.12);
   box-shadow:
     0 30px 80px rgba(0,0,0,0.7),
     0 0 0 1px rgba(240,185,11,0.05),
     inset 0 1px 0 rgba(255,255,255,0.06),
     0 0 100px rgba(240,185,11,0.05);
-  position: relative;
-  z-index: 10;
+  position: relative; z-index: 10;
   animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
@@ -214,11 +149,8 @@ header nav a:hover::after { width: 100%; }
   from { transform: translateY(40px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
-
 .container::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
+  content: ''; position: absolute; top: 0; left: 0;
   width: 100%; height: 3px;
   background: linear-gradient(90deg, transparent, var(--gold), var(--green), var(--gold), transparent);
   background-size: 200% 100%;
@@ -228,15 +160,11 @@ header nav a:hover::after { width: 100%; }
   0% { background-position: 0% 0; }
   100% { background-position: 200% 0; }
 }
-
 .container::after {
-  content: '';
-  position: absolute;
-  top: -50%; right: -50%;
+  content: ''; position: absolute; top: -50%; right: -50%;
   width: 200%; height: 200%;
   background: radial-gradient(circle, rgba(240,185,11,0.03) 0%, transparent 70%);
-  pointer-events: none;
-  animation: rotate 30s linear infinite;
+  pointer-events: none; animation: rotate 30s linear infinite;
 }
 @keyframes rotate {
   from { transform: rotate(0deg); }
@@ -245,44 +173,53 @@ header nav a:hover::after { width: 100%; }
 
 h1 {
   font-family: 'Manrope', sans-serif;
-  font-size: 30px;
-  margin-bottom: 12px;
+  font-size: 30px; margin-bottom: 12px;
   background: linear-gradient(135deg, #ffffff 0%, var(--gold-light) 60%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 800;
-  letter-spacing: -0.8px;
-  line-height: 1.2;
-  position: relative;
-  z-index: 1;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  font-weight: 800; letter-spacing: -0.8px; line-height: 1.2;
+  position: relative; z-index: 1;
 }
 p.subtitle {
-  color: var(--text-dim);
-  font-size: 15px;
-  margin-bottom: 30px;
-  line-height: 1.6;
-  position: relative;
-  z-index: 1;
-  font-weight: 400;
+  color: var(--text-dim); font-size: 15px; margin-bottom: 30px;
+  line-height: 1.6; position: relative; z-index: 1;
 }
+
+/* ===== TABS (НАПРАВЛЕНИЕ ОБМЕНА) ===== */
+.tabs {
+  display: flex; gap: 10px; margin-bottom: 28px;
+  background: rgba(10,14,19,0.6); padding: 6px;
+  border-radius: 14px; border: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.tab {
+  flex: 1; padding: 14px 20px;
+  background: transparent; border: none;
+  color: var(--text-dim); font-size: 14px; font-weight: 600;
+  border-radius: 10px; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Inter', sans-serif;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  letter-spacing: 0.3px;
+}
+.tab:hover { color: var(--text-mid); background: rgba(240,185,11,0.05); }
+.tab.active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #0b0e11;
+  box-shadow: 0 6px 20px rgba(240,185,11,0.35);
+  font-weight: 700;
+}
+.tab.active::before { content: '●'; font-size: 8px; }
 
 /* ===== STATUS BAR ===== */
 .status-bar {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  font-size: 13px;
-  color: var(--green);
-  margin-bottom: 30px;
-  padding: 12px 18px;
+  display: flex; gap: 12px; align-items: center;
+  font-size: 13px; color: var(--green);
+  margin-bottom: 30px; padding: 12px 18px;
   background: linear-gradient(135deg, rgba(14, 203, 129, 0.08), rgba(14, 203, 129, 0.02));
   border: 1px solid rgba(14, 203, 129, 0.2);
   border-radius: 12px;
   animation: pulse 2.5s ease-in-out infinite;
-  position: relative;
-  z-index: 1;
-  font-weight: 500;
+  position: relative; z-index: 1; font-weight: 500;
   backdrop-filter: blur(10px);
 }
 @keyframes pulse {
@@ -290,12 +227,9 @@ p.subtitle {
   50% { box-shadow: 0 0 0 8px rgba(14,203,129,0), inset 0 0 30px rgba(14,203,129,0.1); }
 }
 .status-bar .dot {
-  width: 9px; height: 9px;
-  background: var(--green);
-  border-radius: 50%;
+  width: 9px; height: 9px; background: var(--green); border-radius: 50%;
   box-shadow: 0 0 15px var(--green), 0 0 30px var(--green);
-  animation: blink 1.5s ease-in-out infinite;
-  flex-shrink: 0;
+  animation: blink 1.5s ease-in-out infinite; flex-shrink: 0;
 }
 @keyframes blink {
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -303,44 +237,29 @@ p.subtitle {
 }
 
 /* ===== FORM ===== */
-.form-group { margin-bottom: 24px; position: relative; z-index: 1; }
+.form-group { margin-bottom: 22px; position: relative; z-index: 1; }
 label {
-  display: block;
-  font-size: 12px;
-  color: var(--text-mid);
-  margin-bottom: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-family: 'Inter', sans-serif;
+  display: block; font-size: 12px; color: var(--text-mid);
+  margin-bottom: 10px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
 }
 select, input {
-  width: 100%;
-  padding: 16px 18px;
+  width: 100%; padding: 16px 18px;
   background: rgba(10, 14, 19, 0.9);
   border: 1.5px solid var(--border);
-  border-radius: 14px;
-  color: var(--text);
-  font-size: 15px;
-  outline: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-  appearance: none;
-  -webkit-appearance: none;
+  border-radius: 14px; color: var(--text); font-size: 15px;
+  outline: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 500; font-family: 'Inter', sans-serif;
+  appearance: none; -webkit-appearance: none;
 }
 select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f0b90b' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 18px center;
-  padding-right: 45px;
-  cursor: pointer;
+  padding-right: 45px; cursor: pointer;
 }
 select option { background: #141a21; color: var(--text); }
-select:hover, input:hover {
-  border-color: rgba(240,185,11,0.3);
-  background: rgba(10, 14, 19, 1);
-}
+select:hover, input:hover { border-color: rgba(240,185,11,0.3); background: rgba(10, 14, 19, 1); }
 select:focus, input:focus {
   border-color: var(--gold);
   box-shadow:
@@ -352,65 +271,59 @@ select:focus, input:focus {
 }
 input::placeholder { color: #5e6673; font-weight: 400; }
 
+/* ===== SWAP ICON ===== */
+.swap-icon {
+  display: flex; justify-content: center; align-items: center;
+  margin: -12px 0; position: relative; z-index: 5;
+}
+.swap-icon button {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border: 3px solid #0f1318;
+  border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: #0b0e11;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 25px rgba(240,185,11,0.5);
+}
+.swap-icon button:hover {
+  transform: rotate(180deg) scale(1.1);
+  box-shadow: 0 0 40px rgba(240,185,11,0.8);
+}
+
 /* ===== RATE INFO ===== */
 .rate-info {
   background: linear-gradient(135deg, rgba(240,185,11,0.1), rgba(240,185,11,0.02));
-  padding: 16px 20px;
-  border-radius: 14px;
-  font-size: 13px;
-  color: var(--text-mid);
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid rgba(240,185,11,0.2);
-  position: relative;
-  z-index: 1;
-  font-weight: 500;
+  padding: 16px 20px; border-radius: 14px;
+  font-size: 13px; color: var(--text-mid);
+  margin-bottom: 24px; display: flex; justify-content: space-between;
+  align-items: center; border: 1px solid rgba(240,185,11,0.2);
+  position: relative; z-index: 1; font-weight: 500;
   backdrop-filter: blur(10px);
 }
-.rate-info b {
-  color: var(--gold);
-  font-weight: 800;
-  font-size: 14px;
-  font-family: 'Manrope', sans-serif;
-}
+.rate-info b { color: var(--gold); font-weight: 800; font-size: 14px; font-family: 'Manrope', sans-serif; }
 
 /* ===== BUTTONS ===== */
 .btn {
-  width: 100%;
-  padding: 18px;
+  width: 100%; padding: 18px;
   background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
   background-size: 200% auto;
-  border: none;
-  border-radius: 14px;
-  color: #0b0e11;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
+  border: none; border-radius: 14px; color: #0b0e11;
+  font-size: 16px; font-weight: 800; cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  position: relative;
-  overflow: hidden;
-  box-shadow:
-    0 10px 30px rgba(240,185,11,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.3);
-  font-family: 'Manrope', sans-serif;
-  z-index: 1;
+  letter-spacing: 1px; text-transform: uppercase;
+  position: relative; overflow: hidden;
+  box-shadow: 0 10px 30px rgba(240,185,11,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+  font-family: 'Manrope', sans-serif; z-index: 1;
 }
 .btn:hover {
   background-position: 200% center;
   transform: translateY(-3px);
-  box-shadow:
-    0 15px 40px rgba(240,185,11,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.4);
+  box-shadow: 0 15px 40px rgba(240,185,11,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
 }
 .btn:active { transform: translateY(-1px); }
 .btn::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
+  content: ''; position: absolute; top: 0; left: -100%;
   width: 100%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
   transition: left 0.7s;
@@ -419,31 +332,19 @@ input::placeholder { color: #5e6673; font-weight: 400; }
 
 .btn-green {
   background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 50%, var(--green) 100%);
-  background-size: 200% auto;
-  color: #0b0e11;
-  margin-top: 18px;
-  box-shadow:
-    0 10px 30px rgba(14,203,129,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.3);
+  background-size: 200% auto; color: #0b0e11; margin-top: 18px;
+  box-shadow: 0 10px 30px rgba(14,203,129,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
 }
-.btn-green:hover {
-  box-shadow:
-    0 15px 40px rgba(14,203,129,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.4);
-}
+.btn-green:hover { box-shadow: 0 15px 40px rgba(14,203,129,0.5), inset 0 1px 0 rgba(255,255,255,0.4); }
 
 /* ===== RESULT ===== */
 .result {
-  display: none;
-  margin-top: 28px;
+  display: none; margin-top: 28px;
   background: linear-gradient(150deg, rgba(15,19,24,0.95), rgba(8,11,15,0.98));
-  border-radius: 18px;
-  padding: 28px;
-  font-size: 14px;
+  border-radius: 18px; padding: 28px; font-size: 14px;
   border: 1px solid rgba(240,185,11,0.2);
   animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  z-index: 1;
+  position: relative; z-index: 1;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 40px rgba(0,0,0,0.4);
 }
 .result.show { display: block; }
@@ -451,23 +352,13 @@ input::placeholder { color: #5e6673; font-weight: 400; }
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 .result .addr {
-  background: #05070a;
-  padding: 18px;
-  border-radius: 12px;
-  margin: 16px 0;
-  word-break: break-all;
-  color: var(--gold);
-  font-family: 'Courier New', 'SF Mono', monospace;
-  font-size: 13px;
-  border: 1.5px solid rgba(240,185,11,0.2);
-  position: relative;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  line-height: 1.5;
+  background: #05070a; padding: 18px; border-radius: 12px;
+  margin: 16px 0; word-break: break-all;
+  color: var(--gold); font-family: 'Courier New', 'SF Mono', monospace;
+  font-size: 13px; border: 1.5px solid rgba(240,185,11,0.2);
+  position: relative; cursor: pointer; transition: all 0.3s;
+  font-weight: 600; letter-spacing: 0.5px; line-height: 1.5;
 }
 .result .addr:hover {
   border-color: var(--gold);
@@ -476,42 +367,23 @@ input::placeholder { color: #5e6673; font-weight: 400; }
 }
 .result .addr::after {
   content: '📋 Нажми, чтобы скопировать';
-  display: block;
-  font-size: 10px;
-  color: var(--text-dim);
-  font-family: 'Inter', sans-serif;
-  margin-top: 8px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  font-weight: 500;
+  display: block; font-size: 10px; color: var(--text-dim);
+  font-family: 'Inter', sans-serif; margin-top: 8px;
+  letter-spacing: 0.5px; text-transform: uppercase; font-weight: 500;
 }
-
 .warning {
-  color: var(--red);
-  font-size: 12px;
-  margin-top: 18px;
-  padding: 12px 16px;
-  background: rgba(246, 70, 93, 0.08);
-  border-radius: 10px;
-  border-left: 3px solid var(--red);
-  font-weight: 500;
-  line-height: 1.5;
+  color: var(--red); font-size: 12px; margin-top: 18px;
+  padding: 12px 16px; background: rgba(246, 70, 93, 0.08);
+  border-radius: 10px; border-left: 3px solid var(--red);
+  font-weight: 500; line-height: 1.5;
 }
-
 .success-msg {
-  display: none;
-  margin-top: 24px;
+  display: none; margin-top: 24px;
   background: linear-gradient(135deg, var(--green), var(--green-light));
-  color: #0b0e11;
-  padding: 20px;
-  border-radius: 14px;
-  font-size: 14px;
-  font-weight: 700;
+  color: #0b0e11; padding: 20px; border-radius: 14px;
+  font-size: 14px; font-weight: 700;
   animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1), glowGreen 2s ease-in-out infinite;
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  line-height: 1.5;
+  position: relative; z-index: 1; text-align: center; line-height: 1.5;
 }
 .success-msg.show { display: block; }
 @keyframes glowGreen {
@@ -519,27 +391,19 @@ input::placeholder { color: #5e6673; font-weight: 400; }
   50% { box-shadow: 0 0 60px rgba(14,203,129,0.9); }
 }
 .success-msg b {
-  color: #0b0e11;
-  background: rgba(255,255,255,0.3);
-  padding: 3px 8px;
-  border-radius: 6px;
+  color: #0b0e11; background: rgba(255,255,255,0.3);
+  padding: 3px 8px; border-radius: 6px;
   font-family: 'Manrope', sans-serif;
 }
 
 /* ===== FOOTER ===== */
 footer {
-  margin-top: auto;
-  text-align: center;
-  padding: 30px;
-  color: #5e6673;
-  font-size: 12px;
+  margin-top: auto; text-align: center; padding: 30px;
+  color: #5e6673; font-size: 12px;
   border-top: 1px solid rgba(240,185,11,0.08);
-  position: relative;
-  z-index: 10;
-  background: rgba(5, 7, 10, 0.6);
-  backdrop-filter: blur(20px);
-  font-weight: 500;
-  letter-spacing: 0.3px;
+  position: relative; z-index: 10;
+  background: rgba(5, 7, 10, 0.6); backdrop-filter: blur(20px);
+  font-weight: 500; letter-spacing: 0.3px;
 }
 
 /* ===== АДАПТИВНОСТЬ ===== */
@@ -552,22 +416,18 @@ footer {
   header nav a { margin-left: 16px; font-size: 13px; }
   .btn { font-size: 15px; padding: 16px; }
   .rate-info { font-size: 12px; padding: 14px 16px; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .tab { padding: 12px 14px; font-size: 13px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ФОНОВЫЕ ОРБЫ -->
 <div class="bg-orbs">
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 </div>
-
-<!-- СЕТКА -->
 <div class="grid-bg"></div>
-
-<!-- ЧАСТИЦЫ -->
 <div class="particles" id="particles"></div>
 
 <header>
@@ -584,34 +444,39 @@ footer {
 
 <div class="container">
   <h1>Быстрый обмен криптовалют</h1>
-  <p class="subtitle">Обмен TON, USDT, ETH на рубли и обратно. Без комиссий, мгновенно, безопасно.</p>
+  <p class="subtitle">Обмен крипты на рубли, доллары и обратно. Без комиссий, мгновенно.</p>
+
+  <!-- ТАБЫ НАПРАВЛЕНИЯ -->
+  <div class="tabs">
+    <button class="tab active" onclick="setDirection('crypto2fiat', this)">💱 Крипта → Фиат</button>
+    <button class="tab" onclick="setDirection('fiat2crypto', this)">💳 Фиат → Крипта</button>
+  </div>
 
   <div class="status-bar">
     <span class="dot"></span>
     <span>Все системы работают. Онлайн-обмен доступен 24/7.</span>
   </div>
 
-  <!-- ФОРМА ОБМЕНА -->
+  <!-- ФОРМА -->
   <div id="exchangeForm">
     <div class="form-group">
       <label>Отдаю</label>
-      <select id="fromCurrency">
-        <option value="TON">TON (Toncoin)</option>
-        <option value="USDT">USDT (TRC20)</option>
-        <option value="ETH">ETH (Ethereum)</option>
-      </select>
+      <select id="fromCurrency"></select>
     </div>
     <div class="form-group">
       <label>Сумма</label>
       <input type="number" id="amount" placeholder="Введите сумму" value="1000">
     </div>
+
+    <div class="swap-icon">
+      <button onclick="swapCurrencies()" title="Поменять местами">⇅</button>
+    </div>
+
     <div class="form-group">
       <label>Получаю</label>
-      <select id="toCurrency">
-        <option value="RUB">RUB (Сбербанк / Тинькофф)</option>
-        <option value="CARD">На карту (любой банк)</option>
-      </select>
+      <select id="toCurrency"></select>
     </div>
+
     <div class="rate-info">
       <span>Курс: <b id="rateDisplay">1 TON = 250.00 RUB</b></span>
       <span>Комиссия: <b>0%</b></span>
@@ -621,7 +486,7 @@ footer {
 
   <!-- РЕЗУЛЬТАТ -->
   <div class="result" id="result">
-    <p>✅ Заявка создана. Переведите <b id="payAmount" style="color:#f0b90b;">0</b> <span id="payCur">TON</span> на адрес:</p>
+    <p>✅ Заявка создана. Переведите <b id="payAmount" style="color:#f0b90b;">0</b> <span id="payCur">TON</span>:</p>
     <div class="addr" id="walletAddr" onclick="copyAddr()">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
     <p>После перевода нажмите кнопку ниже:</p>
     <button class="btn btn-green" onclick="showPaymentForm()">✅ Я оплатил</button>
@@ -630,21 +495,21 @@ footer {
 
   <!-- ФОРМА РЕКВИЗИТОВ -->
   <div class="result" id="paymentForm" style="display:none;">
-    <p style="margin-bottom: 20px; font-weight: 600;">📝 Заполните данные для получения рублей:</p>
+    <p style="margin-bottom: 20px; font-weight: 600;">📝 Заполните данные для получения:</p>
     <div class="form-group">
       <label>Ваше имя</label>
       <input type="text" id="userName" placeholder="Иван Иванов">
     </div>
     <div class="form-group">
-      <label>Номер карты или телефон (СБП)</label>
+      <label id="cardLabel">Номер карты или телефон (СБП)</label>
       <input type="text" id="userCard" placeholder="2200 0000 0000 0000">
     </div>
     <div class="form-group">
-      <label>Банк</label>
-      <input type="text" id="userBank" placeholder="Сбербанк / Тинькофф / Альфа">
+      <label>Банк / Кошелёк</label>
+      <input type="text" id="userBank" placeholder="Сбербанк / Тинькофф / TON">
     </div>
     <div class="form-group">
-      <label>Сумма к получению (RUB)</label>
+      <label>Сумма к получению</label>
       <input type="text" id="userAmount" placeholder="250 000">
     </div>
     <button class="btn btn-green" onclick="submitPayment()">Отправить заявку</button>
@@ -688,25 +553,118 @@ const WALLETS = {
 };
 
 const SUPPORT = "@Frycrycry";
-const rates = { TON: 250, USDT: 95, ETH: 250000 };
+
+// ===== КУРСЫ (ОТНОСИТЕЛЬНО RUB) =====
+// 1 единица крипты = X RUB
+const rates = {
+  TON: 250,
+  USDT: 95,
+  ETH: 250000
+};
+
+// Курсы фиата относительно RUB
+const fiatRates = {
+  RUB: 1,
+  USD: 92,
+  EUR: 100
+};
+
+// ===== НАПРАВЛЕНИЯ =====
+const directions = {
+  crypto2fiat: {
+    from: [
+      { value: 'TON', label: 'TON (Toncoin)' },
+      { value: 'USDT', label: 'USDT (TRC20)' },
+      { value: 'ETH', label: 'ETH (Ethereum)' }
+    ],
+    to: [
+      { value: 'RUB', label: 'RUB (Сбербанк / Тинькофф)' },
+      { value: 'USD', label: 'USD (доллары)' },
+      { value: 'EUR', label: 'EUR (евро)' },
+      { value: 'CARD', label: 'На карту (любой банк)' }
+    ]
+  },
+  fiat2crypto: {
+    from: [
+      { value: 'RUB', label: 'RUB (Сбербанк / Тинькофф)' },
+      { value: 'USD', label: 'USD (доллары)' },
+      { value: 'EUR', label: 'EUR (евро)' }
+    ],
+    to: [
+      { value: 'TON', label: 'TON (Toncoin)' },
+      { value: 'USDT', label: 'USDT (TRC20)' },
+      { value: 'ETH', label: 'ETH (Ethereum)' }
+    ]
+  }
+};
+
+let currentDirection = 'crypto2fiat';
+
+function fillSelects() {
+  const fromSelect = document.getElementById('fromCurrency');
+  const toSelect = document.getElementById('toCurrency');
+  const dir = directions[currentDirection];
+
+  fromSelect.innerHTML = dir.from.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+  toSelect.innerHTML = dir.to.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+  updateRate();
+}
+
+function setDirection(dir, btn) {
+  currentDirection = dir;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  fillSelects();
+}
+
+function swapCurrencies() {
+  const fromSelect = document.getElementById('fromCurrency');
+  const toSelect = document.getElementById('toCurrency');
+  const tmp = fromSelect.value;
+  fromSelect.value = toSelect.value;
+  toSelect.value = tmp;
+  updateRate();
+}
+
+function getRate(from, to) {
+  // Курс относительно RUB
+  const fromRate = rates[from] || fiatRates[from] || 1;
+  const toRate = rates[to] || fiatRates[to] || 1;
+  return fromRate / toRate;
+}
 
 function updateRate() {
   const from = document.getElementById('fromCurrency').value;
-  const rate = rates[from] || 250;
-  document.getElementById('rateDisplay').innerText = `1 ${from} = ${rate.toFixed(2)} RUB`;
+  const to = document.getElementById('toCurrency').value;
+  const rate = getRate(from, to);
+  document.getElementById('rateDisplay').innerText = `1 ${from} = ${rate.toFixed(4)} ${to}`;
 }
 
-document.getElementById('fromCurrency').addEventListener('change', updateRate);
-updateRate();
+document.addEventListener('DOMContentLoaded', () => {
+  fillSelects();
+  document.getElementById('fromCurrency').addEventListener('change', updateRate);
+  document.getElementById('toCurrency').addEventListener('change', updateRate);
+});
 
 function calculate() {
   const from = document.getElementById('fromCurrency').value;
+  const to = document.getElementById('toCurrency').value;
   const amount = parseFloat(document.getElementById('amount').value) || 0;
-  const rate = rates[from] || 250;
+  const rate = getRate(from, to);
+  const result = amount * rate;
 
   document.getElementById('payAmount').innerText = amount.toFixed(2);
   document.getElementById('payCur').innerText = from;
-  document.getElementById('walletAddr').innerText = WALLETS[from] || WALLETS.TON;
+
+  // Если отдаём крипту — показываем адрес кошелька
+  if (WALLETS[from]) {
+    document.getElementById('walletAddr').innerText = WALLETS[from];
+    document.getElementById('walletAddr').style.display = 'block';
+  } else {
+    // Если отдаём фиат — показываем реквизиты поддержки
+    document.getElementById('walletAddr').innerText = 'Реквизиты для оплаты: напишите в поддержку ' + SUPPORT;
+  }
+
   document.getElementById('result').classList.add('show');
   document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -735,7 +693,6 @@ function copyAddr() {
   const addr = document.getElementById('walletAddr').innerText;
   navigator.clipboard.writeText(addr).then(() => {
     const el = document.getElementById('walletAddr');
-    const originalText = el.innerHTML;
     el.style.borderColor = '#0ecb81';
     el.style.boxShadow = '0 0 35px rgba(14,203,129,0.6)';
     el.style.transform = 'scale(1.02)';
@@ -748,4 +705,4 @@ function copyAddr() {
 }
 </script>
 </body>
-</html>
+        </html>
