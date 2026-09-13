@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TON Swap — Быстрый обмен криптовалют</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
+body { background: #0b0e11; color: #eaecef; display: flex; flex-direction: column; min-height: 100vh; }
+header { background: #1e2329; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2b3139; }
+header .logo { font-size: 22px; font-weight: 700; color: #f0b90b; }
+header nav a { color: #b7bdc6; margin-left: 20px; text-decoration: none; font-size: 14px; }
+header nav a:hover { color: #f0b90b; }
+.container { max-width: 600px; margin: 40px auto; background: #1e2329; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+h1 { font-size: 24px; margin-bottom: 10px; color: #f0b90b; }
+p.subtitle { color: #848e9c; font-size: 14px; margin-bottom: 25px; }
+.form-group { margin-bottom: 20px; }
+label { display: block; font-size: 13px; color: #b7bdc6; margin-bottom: 6px; }
+select, input { width: 100%; padding: 12px; background: #2b3139; border: 1px solid #3c4450; border-radius: 8px; color: #eaecef; font-size: 15px; outline: none; }
+select:focus, input:focus { border-color: #f0b90b; }
+.rate-info { background: #2b3139; padding: 12px; border-radius: 8px; font-size: 13px; color: #b7bdc6; margin-bottom: 20px; display: flex; justify-content: space-between; }
+.btn { width: 100%; padding: 14px; background: #f0b90b; border: none; border-radius: 8px; color: #0b0e11; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.btn:hover { background: #d9a400; }
+.result { display: none; margin-top: 25px; background: #2b3139; border-radius: 8px; padding: 20px; font-size: 14px; }
+.result.show { display: block; }
+.result .addr { background: #0b0e11; padding: 12px; border-radius: 6px; margin: 10px 0; word-break: break-all; color: #f0b90b; font-family: monospace; font-size: 13px; }
+.warning { color: #f6465d; font-size: 12px; margin-top: 15px; }
+footer { margin-top: auto; text-align: center; padding: 20px; color: #5e6673; font-size: 12px; border-top: 1px solid #2b3139; }
+.status-bar { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #0ecb81; margin-bottom: 20px; }
+.status-bar .dot { width: 8px; height: 8px; background: #0ecb81; border-radius: 50%; }
+</style>
+</head>
+<body>
+<header>
+<div class="logo">⚡ TON SWAP</div>
+<nav>
+<a href="#">Обмен</a>
+<a href="#">Курсы</a>
+<a href="#">Поддержка</a>
+</nav>
+</header>
+<div class="container">
+<h1>Быстрый обмен криптовалют</h1>
+<p class="subtitle">Обмен TON, USDT, ETH на рубли и обратно. Без комиссий, мгновенно.</p>
+<div class="status-bar">
+<span class="dot"></span>
+<span>Все системы работают. Онлайн-обмен доступен 24/7.</span>
+</div>
+<div class="form-group">
+<label>Отдаю</label>
+<select id="fromCurrency">
+<option value="TON">TON (Toncoin)</option>
+<option value="USDT">USDT (TRC20)</option>
+<option value="ETH">ETH (Ethereum)</option>
+</select>
+</div>
+<div class="form-group">
+<label>Сумма</label>
+<input type="number" id="amount" placeholder="Введите сумму" value="1000">
+</div>
+<div class="form-group">
+<label>Получаю</label>
+<select id="toCurrency">
+<option value="RUB">RUB (Сбербанк / Тинькофф)</option>
+<option value="CARD">На карту (любой банк)</option>
+</select>
+</div>
+<div class="rate-info">
+<span>Курс: <b id="rateDisplay">1 TON = 250.00 RUB</b></span>
+<span>Комиссия: <b>0%</b></span>
+</div>
+<button class="btn" onclick="calculate()">Обменять</button>
+<div class="result" id="result">
+<p>✅ Заявка создана. Переведите <b id="payAmount">0</b> <span id="payCur">TON</span> на адрес:</p>
+<div class="addr" id="walletAddr">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
+<p>После перевода нажмите кнопку «Проверить оплату» в боте или напишите в поддержку.</p>
+<p class="warning">⚠️ Внимание: переводы с санкционных бирж запрещены.</p>
+</div>
+</div>
+<footer>
+© 2026 TON SWAP. Все права защищены.
+</footer>
+<script>
+// ===== ТВОИ АДРЕСА =====
+const WALLETS = {
+  TON:  "UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH", // TON
+  USDT: "TT4FuAXpXQjVXYqXuXojbhedYsW3WwZQq1",                 // USDT TRC20
+  ETH:  "0xe16aea126c8Aa4B97eeD2BEf4315956E1840373B"          // ETH / USDT ERC20
+};
+
+// КУРСЫ (МОЖНО МЕНЯТЬ)
+const rates = { TON: 250, USDT: 95, ETH: 250000 };
+
+function updateRate() {
+  const from = document.getElementById('fromCurrency').value;
+  const rate = rates[from] || 250;
+  document.getElementById('rateDisplay').innerText = `1 ${from} = ${rate.toFixed(2)} RUB`;
+}
+
+document.getElementById('fromCurrency').addEventListener('change', updateRate);
+updateRate();
+
+function calculate() {
+  const from = document.getElementById('fromCurrency').value;
+  const amount = parseFloat(document.getElementById('amount').value) || 0;
+  const to = document.getElementById('toCurrency').value;
+  const rate = rates[from] || 250;
+
+  document.getElementById('payAmount').innerText = amount.toFixed(2);
+  document.getElementById('payCur').innerText = from;
+  document.getElementById('walletAddr').innerText = WALLETS[from] || WALLETS.TON;
+  document.getElementById('result').classList.add('show');
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
