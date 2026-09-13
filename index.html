@@ -3,49 +3,424 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TON Swap — Быстрый обмен криптовалют</title>
+<title>TON Swap — Премиум обмен криптовалют</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-body { background: #0b0e11; color: #eaecef; display: flex; flex-direction: column; min-height: 100vh; }
-header { background: #1e2329; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2b3139; }
-header .logo { font-size: 22px; font-weight: 700; color: #f0b90b; }
-header nav a { color: #b7bdc6; margin-left: 20px; text-decoration: none; font-size: 14px; }
+
+body {
+  background: radial-gradient(circle at 20% 20%, #1a1f2e 0%, #0b0e11 50%, #05070a 100%);
+  color: #eaecef;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Анимированный фон */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(240,185,11,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 10% 80%, rgba(14,203,129,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(100,80,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: bgPulse 12s ease-in-out infinite alternate;
+}
+
+@keyframes bgPulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* Плавающие частицы */
+.particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: #f0b90b;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float linear infinite;
+  box-shadow: 0 0 10px #f0b90b;
+}
+@keyframes float {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+}
+
+/* HEADER */
+header {
+  background: rgba(30, 35, 41, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 18px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(240, 185, 11, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  animation: slideDown 0.6s ease-out;
+}
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+header .logo {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f0b90b 0%, #ffd75e 50%, #f0b90b 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+header .logo::before {
+  content: '⚡';
+  font-size: 26px;
+  -webkit-text-fill-color: #f0b90b;
+  animation: zap 2s ease-in-out infinite;
+}
+@keyframes zap {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #f0b90b); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 15px #f0b90b); }
+}
+
+header nav a {
+  color: #b7bdc6;
+  margin-left: 25px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s;
+}
+header nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, #f0b90b, #ffd75e);
+  transition: width 0.3s;
+}
 header nav a:hover { color: #f0b90b; }
-.container { max-width: 600px; margin: 40px auto; background: #1e2329; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-h1 { font-size: 24px; margin-bottom: 10px; color: #f0b90b; }
-p.subtitle { color: #848e9c; font-size: 14px; margin-bottom: 25px; }
-.form-group { margin-bottom: 20px; }
-label { display: block; font-size: 13px; color: #b7bdc6; margin-bottom: 6px; }
-select, input { width: 100%; padding: 12px; background: #2b3139; border: 1px solid #3c4450; border-radius: 8px; color: #eaecef; font-size: 15px; outline: none; }
-select:focus, input:focus { border-color: #f0b90b; }
-.rate-info { background: #2b3139; padding: 12px; border-radius: 8px; font-size: 13px; color: #b7bdc6; margin-bottom: 20px; display: flex; justify-content: space-between; }
-.btn { width: 100%; padding: 14px; background: #f0b90b; border: none; border-radius: 8px; color: #0b0e11; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-.btn:hover { background: #d9a400; }
-.btn-green { background: #0ecb81; color: #0b0e11; margin-top: 15px; }
-.btn-green:hover { background: #0aa76a; }
-.result { display: none; margin-top: 25px; background: #2b3139; border-radius: 8px; padding: 20px; font-size: 14px; }
+header nav a:hover::after { width: 100%; }
+
+/* CONTAINER */
+.container {
+  max-width: 620px;
+  margin: 50px auto;
+  background: linear-gradient(145deg, rgba(30,35,41,0.95) 0%, rgba(20,24,30,0.98) 100%);
+  border-radius: 20px;
+  padding: 40px;
+  border: 1px solid rgba(240, 185, 11, 0.15);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(240,185,11,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  position: relative;
+  z-index: 10;
+  animation: fadeUp 0.8s ease-out;
+  overflow: hidden;
+}
+@keyframes fadeUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px;
+  width: calc(100% + 4px);
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #f0b90b, #0ecb81, #f0b90b, transparent);
+  background-size: 200% 100%;
+  animation: borderFlow 4s linear infinite;
+}
+@keyframes borderFlow {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0b90b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+p.subtitle {
+  color: #848e9c;
+  font-size: 14px;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+/* STATUS BAR */
+.status-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  color: #0ecb81;
+  margin-bottom: 25px;
+  padding: 10px 14px;
+  background: rgba(14, 203, 129, 0.08);
+  border: 1px solid rgba(14, 203, 129, 0.2);
+  border-radius: 10px;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14,203,129,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(14,203,129,0); }
+}
+.status-bar .dot {
+  width: 8px; height: 8px;
+  background: #0ecb81;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #0ecb81;
+  animation: blink 1.5s ease-in-out infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* FORM */
+.form-group { margin-bottom: 22px; position: relative; }
+label {
+  display: block;
+  font-size: 13px;
+  color: #b7bdc6;
+  margin-bottom: 8px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+select, input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(20, 24, 30, 0.8);
+  border: 1.5px solid #2b3139;
+  border-radius: 12px;
+  color: #eaecef;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+select:hover, input:hover { border-color: #3c4450; }
+select:focus, input:focus {
+  border-color: #f0b90b;
+  box-shadow: 0 0 0 4px rgba(240, 185, 11, 0.1), 0 0 20px rgba(240,185,11,0.15);
+  background: rgba(20, 24, 30, 1);
+}
+
+.rate-info {
+  background: linear-gradient(135deg, rgba(240,185,11,0.08), rgba(240,185,11,0.02));
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #b7bdc6;
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid rgba(240,185,11,0.15);
+}
+.rate-info b { color: #f0b90b; }
+
+/* BUTTONS */
+.btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #f0b90b 0%, #ffd75e 50%, #f0b90b 100%);
+  background-size: 200% auto;
+  border: none;
+  border-radius: 12px;
+  color: #0b0e11;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(240,185,11,0.25);
+}
+.btn:hover {
+  background-position: 200% center;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(240,185,11,0.4);
+}
+.btn:active { transform: translateY(0); }
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  transition: left 0.6s;
+}
+.btn:hover::before { left: 100%; }
+
+.btn-green {
+  background: linear-gradient(135deg, #0ecb81 0%, #34e0a1 50%, #0ecb81 100%);
+  background-size: 200% auto;
+  color: #0b0e11;
+  margin-top: 15px;
+  box-shadow: 0 8px 20px rgba(14,203,129,0.25);
+}
+.btn-green:hover {
+  box-shadow: 0 12px 30px rgba(14,203,129,0.4);
+}
+
+/* RESULT */
+.result {
+  display: none;
+  margin-top: 25px;
+  background: linear-gradient(145deg, rgba(20,24,30,0.9), rgba(15,18,22,0.95));
+  border-radius: 14px;
+  padding: 24px;
+  font-size: 14px;
+  border: 1px solid rgba(240,185,11,0.2);
+  animation: fadeIn 0.5s ease-out;
+}
 .result.show { display: block; }
-.result .addr { background: #0b0e11; padding: 12px; border-radius: 6px; margin: 10px 0; word-break: break-all; color: #f0b90b; font-family: monospace; font-size: 13px; }
-.warning { color: #f6465d; font-size: 12px; margin-top: 15px; }
-.success-msg { display: none; margin-top: 20px; background: #0ecb81; color: #0b0e11; padding: 15px; border-radius: 8px; font-size: 14px; font-weight: 600; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result .addr {
+  background: #05070a;
+  padding: 16px;
+  border-radius: 10px;
+  margin: 14px 0;
+  word-break: break-all;
+  color: #f0b90b;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  border: 1px solid rgba(240,185,11,0.2);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.result .addr:hover {
+  border-color: #f0b90b;
+  box-shadow: 0 0 20px rgba(240,185,11,0.2);
+}
+.result .addr::after {
+  content: '📋 Копировать';
+  position: absolute;
+  top: 50%; right: 12px;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: #848e9c;
+  font-family: 'Segoe UI', sans-serif;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.result .addr:hover::after { opacity: 1; }
+
+.warning {
+  color: #f6465d;
+  font-size: 12px;
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(246, 70, 93, 0.08);
+  border-radius: 8px;
+  border-left: 3px solid #f6465d;
+}
+
+.success-msg {
+  display: none;
+  margin-top: 20px;
+  background: linear-gradient(135deg, #0ecb81, #34e0a1);
+  color: #0b0e11;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  animation: fadeIn 0.5s ease-out, glow 2s ease-in-out infinite;
+}
 .success-msg.show { display: block; }
-footer { margin-top: auto; text-align: center; padding: 20px; color: #5e6673; font-size: 12px; border-top: 1px solid #2b3139; }
-.status-bar { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #0ecb81; margin-bottom: 20px; }
-.status-bar .dot { width: 8px; height: 8px; background: #0ecb81; border-radius: 50%; }
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(14,203,129,0.4); }
+  50% { box-shadow: 0 0 40px rgba(14,203,129,0.7); }
+}
+.success-msg b { color: #0b0e11; text-decoration: underline; }
+
+/* FOOTER */
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 25px;
+  color: #5e6673;
+  font-size: 12px;
+  border-top: 1px solid rgba(240,185,11,0.1);
+  position: relative;
+  z-index: 10;
+  background: rgba(10, 13, 17, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* АДАПТИВНОСТЬ */
+@media (max-width: 640px) {
+  .container { margin: 20px 15px; padding: 25px; border-radius: 16px; }
+  h1 { font-size: 22px; }
+  header { padding: 14px 18px; }
+  header .logo { font-size: 20px; }
+  header nav a { margin-left: 15px; font-size: 13px; }
+}
 </style>
 </head>
 <body>
+
+<!-- ЧАСТИЦЫ -->
+<div class="particles" id="particles"></div>
+
 <header>
-<div class="logo">⚡ TON SWAP</div>
+<div class="logo">TON SWAP</div>
 <nav>
 <a href="#">Обмен</a>
 <a href="#">Курсы</a>
 <a href="#">Поддержка</a>
 </nav>
 </header>
+
 <div class="container">
 <h1>Быстрый обмен криптовалют</h1>
 <p class="subtitle">Обмен TON, USDT, ETH на рубли и обратно. Без комиссий, мгновенно.</p>
+
 <div class="status-bar">
 <span class="dot"></span>
 <span>Все системы работают. Онлайн-обмен доступен 24/7.</span>
@@ -79,16 +454,16 @@ footer { margin-top: auto; text-align: center; padding: 20px; color: #5e6673; fo
 <button class="btn" onclick="calculate()">Обменять</button>
 </div>
 
-<!-- РЕЗУЛЬТАТ: АДРЕС И КНОПКА "Я ОПЛАТИЛ" -->
+<!-- РЕЗУЛЬТАТ -->
 <div class="result" id="result">
 <p>✅ Заявка создана. Переведите <b id="payAmount">0</b> <span id="payCur">TON</span> на адрес:</p>
-<div class="addr" id="walletAddr">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
+<div class="addr" id="walletAddr" onclick="copyAddr()">UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH</div>
 <p>После перевода нажмите кнопку ниже:</p>
 <button class="btn btn-green" onclick="showPaymentForm()">✅ Я оплатил</button>
 <p class="warning">⚠️ Внимание: переводы с санкционных бирж запрещены.</p>
 </div>
 
-<!-- ФОРМА РЕКВИЗИТОВ (ПОЯВЛЯЕТСЯ ПОСЛЕ "Я ОПЛАТИЛ") -->
+<!-- ФОРМА РЕКВИЗИТОВ -->
 <div class="result" id="paymentForm" style="display:none;">
 <p>📝 Заполните данные для получения рублей:</p>
 <div class="form-group">
@@ -116,22 +491,32 @@ footer { margin-top: auto; text-align: center; padding: 20px; color: #5e6673; fo
 </div>
 
 </div>
+
 <footer>
 © 2026 TON SWAP. Все права защищены.
 </footer>
 
 <script>
-// ===== ТВОИ АДРЕСА =====
+// ===== ЧАСТИЦЫ =====
+const particlesContainer = document.getElementById('particles');
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+  p.style.animationDelay = Math.random() * 10 + 's';
+  p.style.width = p.style.height = (Math.random() * 4 + 2) + 'px';
+  particlesContainer.appendChild(p);
+}
+
+// ===== АДРЕСА =====
 const WALLETS = {
   TON:  "UQCdkAxf20UIMaboXOfSpmNTkFSVguTVHIw2PMSOhEkF6SuH",
   USDT: "TT4FuAXpXQjVXYqXuXojbhedYsW3WwZQq1",
   ETH:  "0xe16aea126c8Aa4B97eeD2BEf4315956E1840373B"
 };
 
-// ===== ТВОЙ TELEGRAM ДЛЯ ПОДДЕРЖКИ =====
 const SUPPORT = "@Frycrycry";
-
-// КУРСЫ
 const rates = { TON: 250, USDT: 95, ETH: 250000 };
 
 function updateRate() {
@@ -146,7 +531,6 @@ updateRate();
 function calculate() {
   const from = document.getElementById('fromCurrency').value;
   const amount = parseFloat(document.getElementById('amount').value) || 0;
-  const to = document.getElementById('toCurrency').value;
   const rate = rates[from] || 250;
 
   document.getElementById('payAmount').innerText = amount.toFixed(2);
@@ -174,6 +558,18 @@ function submitPayment() {
 
   document.getElementById('successMsg').classList.add('show');
   document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyAddr() {
+  const addr = document.getElementById('walletAddr').innerText;
+  navigator.clipboard.writeText(addr);
+  const el = document.getElementById('walletAddr');
+  el.style.borderColor = '#0ecb81';
+  el.style.boxShadow = '0 0 25px rgba(14,203,129,0.5)';
+  setTimeout(() => {
+    el.style.borderColor = '';
+    el.style.boxShadow = '';
+  }, 1000);
 }
 </script>
 </body>
